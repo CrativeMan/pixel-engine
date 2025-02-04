@@ -3,10 +3,12 @@
 #include <GLFW/glfw3.h>
 #include <string>
 #include "../userInterface/UserInterface.hpp"
+#include "../rendering/Shader.hpp"
 
 class Window {
 public:
   GLFWwindow *id;
+  Shader shader;
   Window();
   Window(int width, int height, std::string title);
   void init(int width, int height, std::string title);

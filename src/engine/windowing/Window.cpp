@@ -1,7 +1,6 @@
 #include <GL/glew.h>
 
 #include "../header/typedefs.h"
-#include "../system/fileHandler.h"
 #include "../system/logger.h"
 #include "Window.hpp"
 #include <GLFW/glfw3.h>
@@ -36,26 +35,26 @@ void Window::init(int width, int heigh, std::string title) {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-  id = glfwCreateWindow(width, heigh, title.c_str(), NULL, NULL);
-  if (id == NULL) {
+  this->id = glfwCreateWindow(width, heigh, title.c_str(), NULL, NULL);
+  if (this->id == NULL) {
     loggerError(ID, "Failed to create glfw window");
     assert(false);
   }
-  loggerInfo(ID, "Created window '%d'", id);
+  loggerInfo(ID, "Created window '%d'", this->id);
 
-  glfwMakeContextCurrent(id);
+  glfwMakeContextCurrent(this->id);
 
   ASSERT(glewInit() == GLEW_OK, "Failed to initialize glew. Aborting")
 
   glfwSwapInterval(1);
-  glfwShowWindow(id);
+  glfwShowWindow(this->id);
   glViewport(0, 0, width, heigh);
 
   this->ui.init(this->id);
 }
 
 void Window::shutdown() {
-  loggerInfo(ID, "Shuting down window");
+  loggerInfo(ID, "Shuting down window '%d'", this->id);
   glfwDestroyWindow(this->id);
   this->ui.shutdown();
   glfwTerminate();
@@ -77,41 +76,7 @@ void Window::loop() {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
 
-  const char *vertexSource = readFile("assets/shader/vertex.glsl");
-  const char *fragmentSource = readFile("assets/shader/fragment.glsl");
-
-  unsigned int vertex = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vertex, 1, &vertexSource, NULL);
-  glCompileShader(vertex);
-
-  int success;
-  char infoLog[512];
-  glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
-  if (!success) {
-    glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-    loggerError(ID, "Vertex shader compilation failed\n%s\n", infoLog);
-  }
-
-  unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fragment, 1, &fragmentSource, NULL);
-  glCompileShader(fragment);
-
-  glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
-  if (!success) {
-    glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-    loggerError(ID, "Fragment shader compilation failed\n%s\n", infoLog);
-  }
-
-  unsigned int shader = glCreateProgram();
-  glAttachShader(shader, vertex);
-  glAttachShader(shader, fragment);
-  glLinkProgram(shader);
-
-  glGetProgramiv(shader, GL_LINK_STATUS, &success);
-  if (!success) {
-    glGetProgramInfoLog(shader, 512, NULL, infoLog);
-    loggerError(ID, "Shader linking failed");
-  }
+  this->shader.init("assets/shader/vertex.glsl", "assets/shader/fragment.glsl");
 
   while (!glfwWindowShouldClose(this->id)) {
     if (glfwGetWindowAttrib(this->id, GLFW_ICONIFIED) != 0) {
@@ -122,7 +87,7 @@ void Window::loop() {
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(shader);
+    glUseProgram(this->shader.id);
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
@@ -134,5 +99,5 @@ void Window::loop() {
 
   glDeleteVertexArrays(1, &vao);
   glDeleteBuffers(1, &vbo);
-  glDeleteProgram(shader);
+  this->shader.shutdown();
 }

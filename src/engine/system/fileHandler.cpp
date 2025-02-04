@@ -6,7 +6,7 @@
 const char *readFile(const char *filepath) {
   FILE *file = fopen(filepath, "rb");
   if (file == NULL) {
-    loggerError("File", "Failed to open file");
+    loggerError("file", "Failed to open file");
     return NULL;
   }
 
@@ -16,14 +16,14 @@ const char *readFile(const char *filepath) {
 
   char *buffer = (char *)malloc(fileSize + 1);
   if (buffer == NULL) {
-    loggerError("File", "Failed to alloc buffer");
+    loggerError("file", "Failed to alloc buffer");
     fclose(file);
     return NULL;
   }
 
   size_t readSize = fread(buffer, 1, fileSize, file);
   if (readSize != fileSize) {
-    loggerError("File", "Failed to read file");
+    loggerError("file", "Failed to read file");
     free(buffer);
     fclose(file);
     return NULL;
@@ -33,6 +33,6 @@ const char *readFile(const char *filepath) {
   fclose(file);
   const char *fileContents = (const char *)buffer;
 
-  loggerInfo("File", "Generated char* from file '%s'", filepath);
+  loggerInfo("file", "Generated char* from file '%s'", filepath);
   return fileContents;
 }
