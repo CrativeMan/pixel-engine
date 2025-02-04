@@ -7,6 +7,7 @@ public:
 	Shader();
 	void init(const char *vertex, const char *fragment);
 	void shutdown();
+	void bind();
 private:
 	const char *vertex;
 	const char *fragment;

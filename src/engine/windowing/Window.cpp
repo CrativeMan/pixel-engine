@@ -44,19 +44,21 @@ void Window::init(int width, int heigh, std::string title) {
 
   glfwMakeContextCurrent(this->id);
 
-  ASSERT(glewInit() == GLEW_OK, "Failed to initialize glew. Aborting")
+  ASSERT(glewInit() == GLEW_OK, "Failed to initialize glew. Aborting");
 
   glfwSwapInterval(1);
   glfwShowWindow(this->id);
   glViewport(0, 0, width, heigh);
 
   this->ui.init(this->id);
+  this->shader.init("assets/shader/vertex.glsl", "assets/shader/fragment.glsl");
 }
 
 void Window::shutdown() {
   loggerInfo(ID, "Shuting down window '%d'", this->id);
   glfwDestroyWindow(this->id);
   this->ui.shutdown();
+  this->shader.shutdown();
   glfwTerminate();
 }
 
@@ -76,8 +78,6 @@ void Window::loop() {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
 
-  this->shader.init("assets/shader/vertex.glsl", "assets/shader/fragment.glsl");
-
   while (!glfwWindowShouldClose(this->id)) {
     if (glfwGetWindowAttrib(this->id, GLFW_ICONIFIED) != 0) {
       ImGui_ImplGlfw_Sleep(10);
@@ -87,7 +87,7 @@ void Window::loop() {
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(this->shader.id);
+    this->shader.bind();
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
@@ -99,5 +99,4 @@ void Window::loop() {
 
   glDeleteVertexArrays(1, &vao);
   glDeleteBuffers(1, &vbo);
-  this->shader.shutdown();
 }

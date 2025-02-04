@@ -57,3 +57,7 @@ void Shader::shutdown() {
   glDeleteProgram(this->id);
   loggerInfo(ID, "Deleting shader '%d'", this->id);
 }
+
+void Shader::bind() {
+  glUseProgram(this->id);
+}
