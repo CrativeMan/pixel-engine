@@ -55,8 +55,10 @@ void Window::init(int width, int heigh, std::string title) {
 }
 
 void Window::shutdown() {
+  loggerInfo(ID, "Shuting down window");
   glfwDestroyWindow(this->id);
   this->ui.shutdown();
+  glfwTerminate();
 }
 
 void Window::loop() {
