@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-#include "header/logger.h"
+#include "logger.h"
 
 const char *RESET = "\033[0m";
 const char *RED = "\033[0;31m";

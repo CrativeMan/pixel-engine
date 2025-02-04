@@ -10,13 +10,14 @@ public:
   Window();
   Window(int width, int height, std::string title);
   void init(int width, int height, std::string title);
+  void loop();
   void shutdown();
-  void loop(UserInterface ui);
 
 private:
   int width;
   int height;
   const char *title;
+  UserInterface ui;
 };
 
 #endif // WINDOW_HPP
