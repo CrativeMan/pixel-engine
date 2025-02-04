@@ -49,3 +49,24 @@ void Window::init(int width, int heigh, std::string title) {
   glfwShowWindow(id);
   glViewport(0, 0, width, heigh);
 }
+
+void Window::shutdown() {
+  glfwDestroyWindow(this->id);
+}
+
+void Window::loop(UserInterface ui) {
+  while (!glfwWindowShouldClose(this->id)) {
+    if (glfwGetWindowAttrib(this->id, GLFW_ICONIFIED) != 0) {
+      ImGui_ImplGlfw_Sleep(10);
+      continue;
+    }
+
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    ui.render();
+
+    glfwSwapBuffers(this->id);
+    glfwPollEvents();
+  }
+}

@@ -16,23 +16,9 @@ int main() {
   ui.init(window.id);
 
   loggerInfo(ID, "Starting window loop");
-  while (!glfwWindowShouldClose(window.id)) {
-    if (glfwGetWindowAttrib(window.id, GLFW_ICONIFIED) != 0) {
-      ImGui_ImplGlfw_Sleep(10);
-      continue;
-    }
-
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    ui.render();
-
-    glfwSwapBuffers(window.id);
-    glfwPollEvents();
-  }
+  window.loop(ui);
 
   loggerInfo(ID, "Shuting down engine");
-  glfwDestroyWindow(window.id);
   ui.shutdown();
   glfwTerminate();
   return 0;
