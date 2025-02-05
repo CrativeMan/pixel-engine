@@ -18,6 +18,7 @@ LevelEditorScene::LevelEditorScene() {}
 
 void LevelEditorScene::init() {
   this->shader.init("assets/shader/vertex.glsl", "assets/shader/fragment.glsl");
+  this->texture = new Texture("assets/textures/atlas.png");
   unsigned int vao, vbo, ebo;
   glGenVertexArrays(1, &vao);
   glGenBuffers(1, &vbo);
@@ -48,7 +49,6 @@ void LevelEditorScene::init() {
   this->vao = vao;
   this->vbo = vbo;
   this->ebo = ebo;
-  this->texture = new Texture("assets/textures/atlas.png");
 }
 
 void LevelEditorScene::update() {}
