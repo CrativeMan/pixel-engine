@@ -1,15 +1,17 @@
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
+#include "../core/scene/Scene.hpp"
+#include "../rendering/Shader.hpp"
+#include "../userInterface/UserInterface.hpp"
 #include <GLFW/glfw3.h>
 #include <string>
-#include "../userInterface/UserInterface.hpp"
-#include "../rendering/Shader.hpp"
 
 class Window {
 public:
   GLFWwindow *id;
-  Shader shader;
-  Window();
+  SceneManager scenemanager;
+
+  Window() {};
   Window(int width, int height, std::string title);
   void init(int width, int height, std::string title);
   void loop();
@@ -20,6 +22,7 @@ private:
   int height;
   const char *title;
   UserInterface ui;
+  Shader shader;
 };
 
 #endif // WINDOW_HPP

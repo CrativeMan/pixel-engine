@@ -6,13 +6,12 @@
 #include <GLFW/glfw3.h>
 #include <cassert>
 #include <cstdio>
+#include <memory>
 #include <stdlib.h>
 
 #define ID "window"
 
 float vertices[] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f};
-
-Window::Window() {}
 
 Window::Window(int width, int height, std::string title) {
   this->width = width;
@@ -30,7 +29,7 @@ void Window::init(int width, int heigh, std::string title) {
 
   glfwDefaultWindowHints();
   glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-  glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+  glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
   glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -52,6 +51,7 @@ void Window::init(int width, int heigh, std::string title) {
 
   this->ui.init(this->id);
   this->shader.init("assets/shader/vertex.glsl", "assets/shader/fragment.glsl");
+  this->scenemanager.changeScene(std::make_unique<LevelEditorScene>());
 }
 
 void Window::shutdown() {
