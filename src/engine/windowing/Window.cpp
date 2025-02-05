@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 
 #include "../header/typedefs.h"
+#include "../input/Input.hpp"
 #include "../system/logger.h"
 #include "Window.hpp"
 #include <GLFW/glfw3.h>
@@ -40,6 +41,11 @@ void Window::init(int width, int heigh, std::string title) {
   }
   loggerInfo(ID, "Created window '%d'", this->id);
 
+  glfwSetCursorPosCallback(this->id, MouseListener::mousePosCallback);
+  glfwSetMouseButtonCallback(this->id, MouseListener::mouseButtonCallback);
+  glfwSetScrollCallback(this->id, MouseListener::mouseScrollCallback);
+  glfwSetKeyCallback(this->id, KeyListener::keyCallback);
+
   glfwMakeContextCurrent(this->id);
 
   ASSERT(glewInit() == GLEW_OK, "Failed to initialize glew. Aborting");
@@ -65,6 +71,9 @@ void Window::loop() {
       ImGui_ImplGlfw_Sleep(10);
       continue;
     }
+
+    if (KeyListener::isKeyPressed(GLFW_KEY_Q))
+      glfwWindowShouldClose(this->id);
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
