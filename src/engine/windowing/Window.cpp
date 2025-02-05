@@ -52,6 +52,10 @@ void Window::init(int width, int heigh, std::string title) {
 
   this->ui.init(this->id);
   this->scenemanager.changeScene(std::make_unique<LevelEditorScene>());
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_ALWAYS);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void Window::shutdown() {
@@ -71,8 +75,8 @@ void Window::loop() {
     if (KeyListener::isKeyPressed(GLFW_KEY_Q))
       glfwSetWindowShouldClose(this->id, GLFW_TRUE);
 
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     this->scenemanager.update();
     this->ui.render();
