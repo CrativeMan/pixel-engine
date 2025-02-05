@@ -2,13 +2,15 @@
 #define SCENE_HPP
 
 #include <memory>
+#include "../../rendering/Shader.hpp"
 
 class Scene {
 public:
   Scene() = default;
   virtual ~Scene() = default;
   virtual void init() = 0;
-  virtual void run() = 0;
+  virtual void update() = 0;
+  virtual void render() = 0;
 
 private:
 };
@@ -16,8 +18,14 @@ private:
 class LevelEditorScene : public Scene {
 public:
   LevelEditorScene();
+  ~LevelEditorScene();
   void init() override;
-  void run() override;
+  void update() override;
+  void render() override;
+
+private:
+unsigned int vao, vbo;
+Shader shader;
 };
 
 class SceneManager {

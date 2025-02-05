@@ -2,4 +2,6 @@
 
 void Scene::init() {}
 
-void Scene::run() {}
+void Scene::update() {}
+
+void Scene::render() {}

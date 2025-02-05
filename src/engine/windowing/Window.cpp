@@ -11,7 +11,6 @@
 
 #define ID "window"
 
-float vertices[] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f};
 
 Window::Window(int width, int height, std::string title) {
   this->width = width;
@@ -50,7 +49,6 @@ void Window::init(int width, int heigh, std::string title) {
   glViewport(0, 0, width, heigh);
 
   this->ui.init(this->id);
-  this->shader.init("assets/shader/vertex.glsl", "assets/shader/fragment.glsl");
   this->scenemanager.changeScene(std::make_unique<LevelEditorScene>());
 }
 
@@ -58,26 +56,10 @@ void Window::shutdown() {
   loggerInfo(ID, "Shuting down window '%d'", this->id);
   glfwDestroyWindow(this->id);
   this->ui.shutdown();
-  this->shader.shutdown();
   glfwTerminate();
 }
 
 void Window::loop() {
-  unsigned int vao, vbo;
-  glGenVertexArrays(1, &vao);
-  glGenBuffers(1, &vbo);
-
-  glBindVertexArray(vao);
-
-  glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-  glEnableVertexAttribArray(0);
-
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
-  glBindVertexArray(0);
-
   while (!glfwWindowShouldClose(this->id)) {
     if (glfwGetWindowAttrib(this->id, GLFW_ICONIFIED) != 0) {
       ImGui_ImplGlfw_Sleep(10);
@@ -87,16 +69,10 @@ void Window::loop() {
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    this->shader.bind();
-    glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-
+    this->scenemanager.update();
     this->ui.render();
 
     glfwSwapBuffers(this->id);
     glfwPollEvents();
   }
-
-  glDeleteVertexArrays(1, &vao);
-  glDeleteBuffers(1, &vbo);
 }

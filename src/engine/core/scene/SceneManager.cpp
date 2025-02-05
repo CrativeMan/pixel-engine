@@ -1,7 +1,7 @@
 #include "Scene.hpp"
 
 void SceneManager::changeScene(std::unique_ptr<Scene> newScene) {
-  currentScene = std::move(newScene); // unique_ptr needs to be moved
+  currentScene = std::move(newScene);
   if (currentScene) {
     currentScene->init();
   }
@@ -9,6 +9,7 @@ void SceneManager::changeScene(std::unique_ptr<Scene> newScene) {
 
 void SceneManager::update() {
   if (currentScene) {
-    currentScene->run();
+    currentScene->update();
+    currentScene->render();
   }
 }
