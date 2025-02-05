@@ -1,9 +1,9 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
-#include <memory>
 #include "../../assets/Shader.hpp"
 #include "../../assets/Texture.hpp"
+#include <memory>
 
 class Scene {
 public:
@@ -25,9 +25,9 @@ public:
   void render() override;
 
 private:
-unsigned int vao, vbo, ebo;
-Shader shader;
-Texture *texture;
+  unsigned int vao, vbo, ebo;
+  Shader shader;
+  Texture *texture;
 };
 
 class SceneManager {
@@ -37,9 +37,7 @@ private:
 public:
   void changeScene(std::unique_ptr<Scene> newScene);
   void update();
-  Scene *getCurrentScene() const {
-    return currentScene.get();
-  }
+  Scene *getCurrentScene() const { return currentScene.get(); }
 };
 
 #endif // SCENE_HPP

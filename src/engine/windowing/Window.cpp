@@ -11,7 +11,6 @@
 
 #define ID "window"
 
-
 Window::Window(int width, int height, std::string title) {
   this->width = width;
   this->height = height;
@@ -32,6 +31,7 @@ void Window::init(int width, int heigh, std::string title) {
   glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   this->id = glfwCreateWindow(width, heigh, title.c_str(), NULL, NULL);
   if (this->id == NULL) {

@@ -3,7 +3,7 @@
 #include "../system/fileHandler.h"
 #include "../system/logger.h"
 #include "Shader.hpp"
-#include <GLFW/glfw3.h>
+#include <glm/gtc/type_ptr.hpp>
 
 #define ID "shader"
 
@@ -62,6 +62,25 @@ void Shader::attach() { glUseProgram(this->id); }
 
 void Shader::detach() { glUseProgram(0); }
 
-void Shader::setInt() {
-  glUniform1i(glGetUniformLocation());
+void Shader::setInt(std::string name, int value) {
+  glUniform1i(glGetUniformLocation(this->id, name.c_str()), value);
+}
+
+void Shader::setFloat(std::string name, float value) {
+  glUniform1f(glGetUniformLocation(this->id, name.c_str()), value);
+}
+
+void Shader::setVec3(std::string name, glm::vec3 value) {
+  glUniform3f(glGetUniformLocation(this->id, name.c_str()), value.x, value.y,
+              value.z);
+}
+
+void Shader::setVec4(std::string name, glm::vec4 value) {
+  glUniform4f(glGetUniformLocation(this->id, name.c_str()), value.x, value.y,
+              value.z, value.w);
+}
+
+void Shader::setMat4(std::string name, glm::mat4 value) {
+  glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE,
+                     glm::value_ptr(value));
 }
