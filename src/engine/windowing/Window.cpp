@@ -5,10 +5,6 @@
 #include "../system/logger.h"
 #include "Window.hpp"
 #include <GLFW/glfw3.h>
-#include <cassert>
-#include <cstdio>
-#include <memory>
-#include <stdlib.h>
 
 #define ID "window"
 

@@ -4,7 +4,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../system/logger.h"
 #include "stb_image.h"
-#include <string>
 
 #define ID "texture"
 
