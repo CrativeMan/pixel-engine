@@ -41,6 +41,7 @@ void LevelEditorScene::init() {
   this->vao = vao;
   this->vbo = vbo;
   this->ebo = ebo;
+  this->texture = new Texture("assets/textures/atlas.png");
 }
 
 void LevelEditorScene::update() {}

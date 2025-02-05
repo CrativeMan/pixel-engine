@@ -1,19 +1,19 @@
 #include <GL/glew.h>
 
-#include "Shader.hpp"
 #include "../system/fileHandler.h"
 #include "../system/logger.h"
+#include "Shader.hpp"
 #include <GLFW/glfw3.h>
 
 #define ID "shader"
 
-Shader::Shader(){}
+Shader::Shader() {}
 
 void Shader::init(const char *vertexPath, const char *fragmentPath) {
   this->vertex = vertexPath;
-	this->fragment = fragmentPath;
+  this->fragment = fragmentPath;
 
-	const char *vertexSource = readFile(vertexPath);
+  const char *vertexSource = readFile(vertexPath);
   const char *fragmentSource = readFile(fragmentPath);
 
   unsigned int vertex = glCreateShader(GL_VERTEX_SHADER);
@@ -58,10 +58,10 @@ void Shader::shutdown() {
   loggerInfo(ID, "Deleting shader '%d'", this->id);
 }
 
-void Shader::attach() {
-  glUseProgram(this->id);
-}
+void Shader::attach() { glUseProgram(this->id); }
 
-void Shader::detach() {
+void Shader::detach() { glUseProgram(0); }
 
+void Shader::setInt() {
+  glUniform1i(glGetUniformLocation());
 }

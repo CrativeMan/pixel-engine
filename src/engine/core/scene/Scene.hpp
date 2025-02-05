@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "../../assets/Shader.hpp"
+#include "../../assets/Texture.hpp"
 
 class Scene {
 public:
@@ -26,6 +27,7 @@ public:
 private:
 unsigned int vao, vbo, ebo;
 Shader shader;
+Texture *texture;
 };
 
 class SceneManager {

@@ -1,11 +1,14 @@
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
 
+#include <string>
+
 class Texture {
 public:
-	Texture(const char *path);
+  unsigned int id;
+	Texture(std::string path);
 private:
-	const char *path;
+	std::string path;
 };
 
 #endif //TEXTURE_HPP

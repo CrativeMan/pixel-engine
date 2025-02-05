@@ -9,6 +9,12 @@ public:
 	void shutdown();
 	void attach();
 	void detach();
+
+	void setInt();
+	void setFloat();
+	void setVec3();
+	void setVec4();
+	void setMat4();
 private:
 	const char *vertex;
 	const char *fragment;
