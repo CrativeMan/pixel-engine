@@ -12,6 +12,8 @@ public:
   static void keyCallback(GLFWwindow *window, int key, int scancode, int action,
                           int mods) {
     (void)window;
+    (void)mods;
+    (void)scancode;
     if (action == GLFW_PRESS)
       keyPressed[key] = true;
     else if (action == GLFW_RELEASE)
@@ -55,6 +57,7 @@ public:
   static void mouseButtonCallback(GLFWwindow *window, int button, int action,
                                   int mods) {
     (void)window;
+    (void)mods;
     if (action == GLFW_PRESS) {
       if (button < 3)
         mouseButtonPresses[button] = true;

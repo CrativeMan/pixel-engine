@@ -73,7 +73,7 @@ void Window::loop() {
     }
 
     if (KeyListener::isKeyPressed(GLFW_KEY_Q))
-      glfwWindowShouldClose(this->id);
+      glfwSetWindowShouldClose(this->id, GLFW_TRUE);
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
