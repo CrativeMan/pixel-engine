@@ -2,7 +2,7 @@
 #define SCENE_HPP
 
 #include <memory>
-#include "../../rendering/Shader.hpp"
+#include "../../assets/Shader.hpp"
 
 class Scene {
 public:
@@ -24,7 +24,7 @@ public:
   void render() override;
 
 private:
-unsigned int vao, vbo;
+unsigned int vao, vbo, ebo;
 Shader shader;
 };
 

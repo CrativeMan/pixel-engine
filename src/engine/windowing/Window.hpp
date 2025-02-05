@@ -1,7 +1,6 @@
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 #include "../core/scene/Scene.hpp"
-#include "../rendering/Shader.hpp"
 #include "../userInterface/UserInterface.hpp"
 #include <GLFW/glfw3.h>
 #include <string>
@@ -22,7 +21,6 @@ private:
   int height;
   const char *title;
   UserInterface ui;
-  Shader shader;
 };
 
 #endif // WINDOW_HPP
