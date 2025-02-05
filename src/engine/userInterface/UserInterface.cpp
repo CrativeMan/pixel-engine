@@ -1,7 +1,6 @@
 #include "UserInterface.hpp"
 
-UserInterface::UserInterface() {
-}
+UserInterface::UserInterface() {}
 
 void UserInterface::init(GLFWwindow *w) {
   IMGUI_CHECKVERSION();
