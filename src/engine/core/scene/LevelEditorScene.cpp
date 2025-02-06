@@ -3,12 +3,13 @@
 #include "Scene.hpp"
 
 float vertices[] = {
-    // positions          // colors           // texture coords
-    0.5f,  0.5f,  0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
-    0.5f,  -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // bottom right
-    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
-    -0.5f, 0.5f,  0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f  // top left
+    // positions            // colors         // texture coords
+    200.0f, 200.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
+    200.0f, -0.0f,  0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // bottom right
+    -0.0f,  -0.0f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
+    -0.0f,  200.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f  // top left
 };
+
 unsigned int indices[] = {
     0, 1, 3, // first triangle
     1, 2, 3  // second triangle
@@ -19,7 +20,7 @@ LevelEditorScene::LevelEditorScene() {}
 void LevelEditorScene::init() {
   this->shader.init("assets/shader/vertex.glsl", "assets/shader/fragment.glsl");
   this->texture = new Texture("assets/textures/atlas.png");
-  this->camera.init(glm::vec2(1000.0f, 1000.0f));
+  this->camera.init(glm::vec2());
   unsigned int vao, vbo, ebo;
   glGenVertexArrays(1, &vao);
   glGenBuffers(1, &vbo);
@@ -52,7 +53,10 @@ void LevelEditorScene::init() {
   this->ebo = ebo;
 }
 
-void LevelEditorScene::update(float deltaTime) {}
+void LevelEditorScene::update(float deltaTime) {
+  camera.position.x -= deltaTime * 10.0f;
+  camera.position.y -= deltaTime * 10.0f;
+}
 
 void LevelEditorScene::render() {
   this->shader.attach();

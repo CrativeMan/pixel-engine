@@ -6,8 +6,11 @@ layout(location = 2) in vec2 aTexCoords;
 out vec3 fColor;
 out vec2 fTexCoords;
 
+uniform mat4 uProjectionMatrix;
+uniform mat4 uViewMatrix;
+
 void main() {
-    gl_Position = vec4(aPos, 1.0);
     fColor = aColor;
     fTexCoords = aTexCoords;
+    gl_Position = uProjectionMatrix * uViewMatrix * vec4(aPos, 1.0);
 }
