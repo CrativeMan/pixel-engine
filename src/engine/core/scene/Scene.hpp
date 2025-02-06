@@ -37,8 +37,10 @@ public:
 
 private:
   unsigned int vao, vbo, ebo;
-  Shader shader;
+  Shader *shader;
   Texture *texture;
+
+  void loadResources();
 };
 
 class SceneManager {

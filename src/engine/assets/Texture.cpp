@@ -7,7 +7,9 @@
 
 #define ID "texture"
 
-Texture::Texture(std::string path) {
+Texture::Texture(std::string path) { this->init(path); }
+
+void Texture::init(std::string path) {
   unsigned int texture;
 
   glGenTextures(1, &texture);
@@ -45,4 +47,7 @@ Texture::Texture(std::string path) {
   stbi_image_free(data);
 
   this->path = path;
+  this->width = width;
+  this->height = height;
+  this->nrChannels = nrChannels;
 }

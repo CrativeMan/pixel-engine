@@ -8,6 +8,7 @@ class Shader {
 public:
   unsigned int id;
   Shader();
+  Shader(const char *vertex, const char *fragment);
   void init(const char *vertex, const char *fragment);
   void shutdown();
   void attach();

@@ -6,9 +6,16 @@
 class Texture {
 public:
   unsigned int id;
-	Texture(std::string path);
+  int width, height, nrChannels;
+  Texture() {}
+  Texture(std::string path);
+  void init(std::string path);
+
+  int getWidth() { return this->width; }
+  int getHeight() { return this->height; }
+
 private:
-	std::string path;
+  std::string path;
 };
 
-#endif //TEXTURE_HPP
+#endif // TEXTURE_HPP

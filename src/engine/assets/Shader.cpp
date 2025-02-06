@@ -9,6 +9,10 @@
 
 Shader::Shader() {}
 
+Shader::Shader(const char *vertexPath, const char *fragmentPath) {
+  this->init(vertexPath, fragmentPath);
+}
+
 void Shader::init(const char *vertexPath, const char *fragmentPath) {
   this->vertex = vertexPath;
   this->fragment = fragmentPath;

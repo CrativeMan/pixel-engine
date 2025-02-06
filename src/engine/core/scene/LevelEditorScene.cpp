@@ -1,6 +1,11 @@
 #include <GL/glew.h>
 
+#include "../../assets/AssetPool.hpp"
+#include "../../system/logger.h"
+
 #include "Scene.hpp"
+
+#define ID "les"
 
 float vertices[] = {
     // positions            // colors         // texture coords
@@ -18,8 +23,10 @@ unsigned int indices[] = {
 LevelEditorScene::LevelEditorScene() {}
 
 void LevelEditorScene::init() {
-  this->shader.init("assets/shader/vertex.glsl", "assets/shader/fragment.glsl");
-  this->texture = new Texture("assets/textures/atlas.png");
+  this->loadResources();
+  this->shader = AssetPool::getShader("assets/shader/vertex.glsl",
+                                      "assets/shader/fragment.glsl");
+  this->texture = AssetPool::getTexture("assets/textures/atlas.png");
   this->camera.init(glm::vec2());
   unsigned int vao, vbo, ebo;
   glGenVertexArrays(1, &vao);
@@ -53,24 +60,32 @@ void LevelEditorScene::init() {
   this->ebo = ebo;
 }
 
+void LevelEditorScene::loadResources() {
+  AssetPool::getShader("assets/shader/vertex.glsl",
+                       "assets/shader/fragment.glsl");
+  AssetPool::getTexture("assets/textures/atlas.png");
+  loggerInfo(ID, "Loaded resources for LevelEditorScene");
+}
+
 void LevelEditorScene::update(float deltaTime) {
   camera.position.x -= deltaTime * 10.0f;
   camera.position.y -= deltaTime * 10.0f;
 }
 
 void LevelEditorScene::render() {
-  this->shader.attach();
-  this->shader.setMat4("uProjectionMatrix", this->camera.getProjectionMatrix());
-  this->shader.setMat4("uViewMatrix", this->camera.getViewMatrix());
+  this->shader->attach();
+  this->shader->setMat4("uProjectionMatrix",
+                        this->camera.getProjectionMatrix());
+  this->shader->setMat4("uViewMatrix", this->camera.getViewMatrix());
   glBindTexture(GL_TEXTURE_2D, this->texture->id);
   glBindVertexArray(this->vao);
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-  this->shader.detach();
+  this->shader->detach();
 }
 
 LevelEditorScene::~LevelEditorScene() {
   glDeleteVertexArrays(1, &this->vao);
   glDeleteBuffers(1, &this->vbo);
   glDeleteBuffers(1, &this->ebo);
-  this->shader.shutdown();
+  this->shader->shutdown();
 }
