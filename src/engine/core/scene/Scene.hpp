@@ -3,14 +3,25 @@
 
 #include "../../assets/Shader.hpp"
 #include "../../assets/Texture.hpp"
+#include "../../rendering/Camera.hpp"
+#include "../../rendering/Renderer.hpp"
+
 #include <memory>
 
 class Scene {
+protected:
+  Renderer renderer;
+  Camera camera;
+  bool isRunning = false;
+  bool levelLoaded = false;
+
 public:
   Scene() = default;
   virtual ~Scene() = default;
   virtual void init() = 0;
-  virtual void update() = 0;
+  virtual void start() {}
+  virtual void addGameObject() {}
+  virtual void update(float deltaTime) = 0;
   virtual void render() = 0;
 
 private:
@@ -21,7 +32,7 @@ public:
   LevelEditorScene();
   ~LevelEditorScene();
   void init() override;
-  void update() override;
+  void update(float deltaTime) override;
   void render() override;
 
 private:
@@ -36,7 +47,7 @@ private:
 
 public:
   void changeScene(std::unique_ptr<Scene> newScene);
-  void update();
+  void update(float deltaTime);
   Scene *getCurrentScene() const { return currentScene.get(); }
 };
 

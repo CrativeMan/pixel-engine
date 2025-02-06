@@ -19,6 +19,7 @@ LevelEditorScene::LevelEditorScene() {}
 void LevelEditorScene::init() {
   this->shader.init("assets/shader/vertex.glsl", "assets/shader/fragment.glsl");
   this->texture = new Texture("assets/textures/atlas.png");
+  this->camera.init(glm::vec2(1000.0f, 1000.0f));
   unsigned int vao, vbo, ebo;
   glGenVertexArrays(1, &vao);
   glGenBuffers(1, &vbo);
@@ -51,10 +52,12 @@ void LevelEditorScene::init() {
   this->ebo = ebo;
 }
 
-void LevelEditorScene::update() {}
+void LevelEditorScene::update(float deltaTime) {}
 
 void LevelEditorScene::render() {
   this->shader.attach();
+  this->shader.setMat4("uProjectionMatrix", this->camera.getProjectionMatrix());
+  this->shader.setMat4("uViewMatrix", this->camera.getViewMatrix());
   glBindTexture(GL_TEXTURE_2D, this->texture->id);
   glBindVertexArray(this->vao);
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

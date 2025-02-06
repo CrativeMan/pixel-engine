@@ -2,6 +2,6 @@
 
 void Scene::init() {}
 
-void Scene::update() {}
+void Scene::update(float deltaTime) {}
 
 void Scene::render() {}

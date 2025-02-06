@@ -7,9 +7,9 @@ void SceneManager::changeScene(std::unique_ptr<Scene> newScene) {
   }
 }
 
-void SceneManager::update() {
+void SceneManager::update(float deltaTime) {
   if (currentScene) {
-    currentScene->update();
+    currentScene->update(deltaTime);
     currentScene->render();
   }
 }

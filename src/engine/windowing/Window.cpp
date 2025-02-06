@@ -66,6 +66,9 @@ void Window::shutdown() {
 }
 
 void Window::loop() {
+  float beginTime = glfwGetTime();
+  float endTime;
+  float dt = -1.0f;
   while (!glfwWindowShouldClose(this->id)) {
     if (glfwGetWindowAttrib(this->id, GLFW_ICONIFIED) != 0) {
       ImGui_ImplGlfw_Sleep(10);
@@ -78,10 +81,14 @@ void Window::loop() {
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    this->scenemanager.update();
+    this->scenemanager.update(dt);
     this->ui.render();
 
     glfwSwapBuffers(this->id);
     glfwPollEvents();
+
+    endTime = glfwGetTime();
+    dt = endTime - beginTime;
+    beginTime = endTime;
   }
 }
