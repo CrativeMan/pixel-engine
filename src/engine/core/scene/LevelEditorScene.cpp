@@ -1,4 +1,10 @@
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <cmath>
+#include <cstdlib>
+#include <cwchar>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/trigonometric.hpp>
 
 #include "../../assets/AssetPool.hpp"
 #include "../../system/logger.h"
@@ -27,7 +33,7 @@ void LevelEditorScene::init() {
   this->shader = AssetPool::getShader("assets/shader/vertex.glsl",
                                       "assets/shader/fragment.glsl");
   this->texture = AssetPool::getTexture("assets/textures/atlas.png");
-  this->camera.init(glm::vec2());
+  this->camera.init(glm::vec2(-300, -300));
   unsigned int vao, vbo, ebo;
   glGenVertexArrays(1, &vao);
   glGenBuffers(1, &vbo);
@@ -67,19 +73,23 @@ void LevelEditorScene::loadResources() {
   loggerInfo(ID, "Loaded resources for LevelEditorScene");
 }
 
-void LevelEditorScene::update(float deltaTime) {
-  camera.position.x -= deltaTime * 10.0f;
-  camera.position.y -= deltaTime * 10.0f;
-}
+void LevelEditorScene::update(float deltaTime) {}
 
 void LevelEditorScene::render() {
   this->shader->attach();
+  glBindVertexArray(this->vao);
+  glBindTexture(GL_TEXTURE_2D, this->texture->id);
+
   this->shader->setMat4("uProjectionMatrix",
                         this->camera.getProjectionMatrix());
   this->shader->setMat4("uViewMatrix", this->camera.getViewMatrix());
-  glBindTexture(GL_TEXTURE_2D, this->texture->id);
-  glBindVertexArray(this->vao);
+
+  glm::mat4 model = glm::mat4(1.0f);
+  model = glm::rotate(model, glm::radians((float)glfwGetTime()),
+                      glm::vec3(0, 0, 1));
+  this->shader->setMat4("uModelMatrix", model);
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
   this->shader->detach();
 }
 
