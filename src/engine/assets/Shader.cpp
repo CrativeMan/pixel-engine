@@ -2,6 +2,7 @@
 
 #include "../system/fileHandler.h"
 #include "../system/logger.h"
+#include "AssetPool.hpp"
 #include "Shader.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
@@ -17,8 +18,10 @@ void Shader::init(const char *vertexPath, const char *fragmentPath) {
   this->vertex = vertexPath;
   this->fragment = fragmentPath;
 
-  const char *vertexSource = readFile(vertexPath);
-  const char *fragmentSource = readFile(fragmentPath);
+  const char *vertexSource =
+      readFile(AssetPool::getAssetPath(vertexPath).c_str());
+  const char *fragmentSource =
+      readFile(AssetPool::getAssetPath(fragmentPath).c_str());
 
   unsigned int vertex = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(vertex, 1, &vertexSource, NULL);

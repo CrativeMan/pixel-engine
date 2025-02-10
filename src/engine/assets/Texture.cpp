@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 
+#include "AssetPool.hpp"
 #include "Texture.hpp"
 #define STB_IMAGE_IMPLEMENTATION
 #include "../system/logger.h"
@@ -23,8 +24,8 @@ void Texture::init(std::string path) {
   stbi_set_flip_vertically_on_load(true);
 
   int width, height, nrChannels;
-  unsigned char *data =
-      stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+  unsigned char *data = stbi_load(AssetPool::getAssetPath(path).c_str(), &width,
+                                  &height, &nrChannels, 0);
 
   if (data) {
     GLenum format = GL_NONE;

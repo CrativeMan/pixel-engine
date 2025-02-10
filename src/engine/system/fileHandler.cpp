@@ -6,7 +6,7 @@
 const char *readFile(const char *filepath) {
   FILE *file = fopen(filepath, "rb");
   if (file == NULL) {
-    loggerError("file", "Failed to open file");
+    loggerError("file", "Failed to open file '%s'", filepath);
     return NULL;
   }
 

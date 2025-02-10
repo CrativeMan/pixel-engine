@@ -30,9 +30,9 @@ LevelEditorScene::LevelEditorScene() {}
 
 void LevelEditorScene::init() {
   this->loadResources();
-  this->shader = AssetPool::getShader("assets/shader/vertex.glsl",
-                                      "assets/shader/fragment.glsl");
-  this->texture = AssetPool::getTexture("assets/textures/atlas.png");
+  this->shader =
+      AssetPool::getShader("shader/vertex.glsl", "shader/fragment.glsl");
+  this->texture = AssetPool::getTexture("textures/atlas.png");
   this->camera.init(glm::vec2(-300, -300));
   unsigned int vao, vbo, ebo;
   glGenVertexArrays(1, &vao);
@@ -67,9 +67,8 @@ void LevelEditorScene::init() {
 }
 
 void LevelEditorScene::loadResources() {
-  AssetPool::getShader("assets/shader/vertex.glsl",
-                       "assets/shader/fragment.glsl");
-  AssetPool::getTexture("assets/textures/atlas.png");
+  AssetPool::getShader("shader/vertex.glsl", "shader/fragment.glsl");
+  AssetPool::getTexture("textures/atlas.png");
   loggerInfo(ID, "Loaded resources for LevelEditorScene");
 }
 
