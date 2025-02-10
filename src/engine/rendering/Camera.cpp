@@ -1,5 +1,5 @@
 #include "Camera.hpp"
-#include "../system/logger.h"
+#include "../system/logger.hpp"
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 
@@ -16,8 +16,8 @@ void Camera::init(glm::vec2 position) {
   this->inverseProjectionMatrix = glm::mat4(1.0f);
   this->inverseViewMatrix = glm::mat4(1.0f);
   adjustProjection();
-  loggerInfo(ID, "Camera initiaed at position: %.1f %.1f", this->position.x,
-             this->position.y);
+  LOG_INFO("Camera initiaed at position: %.1f %.1f", this->position.x,
+           this->position.y);
 }
 
 void Camera::adjustProjection() {

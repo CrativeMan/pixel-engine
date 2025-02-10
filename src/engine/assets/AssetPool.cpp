@@ -1,5 +1,6 @@
 #include "AssetPool.hpp"
-#include "../config.h"
+
+#include "../system/System.hpp"
 #include "Spritesheet.hpp"
 #include "Texture.hpp"
 #include <filesystem>
@@ -9,14 +10,10 @@ std::unordered_map<std::string, Shader *> AssetPool::shaders;
 std::unordered_map<std::string, Texture *> AssetPool::textures;
 std::unordered_map<std::string, Spritesheet *> AssetPool::spriteSheets;
 
-std::string AssetPool::getAssetPath(const std::string &asset) {
-  return std::string(ASSETS_PATH) + "/" + asset;
-}
-
 Shader *AssetPool::getShader(const std::string &vertexPath,
                              const std::string &fragmentPath) {
-  std::filesystem::path vfile(getAssetPath(vertexPath));
-  std::filesystem::path ffile(getAssetPath(vertexPath));
+  std::filesystem::path vfile(sys::getAssetPath(vertexPath));
+  std::filesystem::path ffile(sys::getAssetPath(vertexPath));
 
   std::string absolutePath = vfile.string() + ffile.string();
 
@@ -30,7 +27,7 @@ Shader *AssetPool::getShader(const std::string &vertexPath,
 }
 
 Texture *AssetPool::getTexture(const std::string &resourceName) {
-  std::filesystem::path file(getAssetPath(resourceName));
+  std::filesystem::path file(sys::getAssetPath(resourceName));
   std::string absolutePath = file.string();
 
   auto it = textures.find(absolutePath);
@@ -45,7 +42,7 @@ Texture *AssetPool::getTexture(const std::string &resourceName) {
 
 void AssetPool::addSpriteSheet(const std::string &resourceName,
                                std::shared_ptr<Spritesheet> spritesheet) {
-  std::filesystem::path file(getAssetPath(resourceName));
+  std::filesystem::path file(sys::getAssetPath(resourceName));
   std::string absolutePath = file.string();
 
   if (spriteSheets.find(absolutePath) == spriteSheets.end()) {
@@ -55,7 +52,7 @@ void AssetPool::addSpriteSheet(const std::string &resourceName,
 }
 
 Spritesheet *AssetPool::getSpritesheet(const std::string &resourceName) {
-  std::filesystem::path file(getAssetPath(resourceName));
+  std::filesystem::path file(sys::getAssetPath(resourceName));
   std::string absolutePath = file.string();
 
   auto it = spriteSheets.find(absolutePath);

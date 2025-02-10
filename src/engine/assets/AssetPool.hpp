@@ -11,7 +11,6 @@
 class AssetPool {
 public:
   AssetPool() {}
-  static std::string getAssetPath(const std::string &asset);
   static Shader *getShader(const std::string &vertexPath,
                            const std::string &fragmentPath);
   static Texture *getTexture(const std::string &resourceName);

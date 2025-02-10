@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "../../assets/AssetPool.hpp"
-#include "../../system/logger.h"
+#include "../../system/logger.hpp"
 
 #include "Scene.hpp"
 
@@ -75,12 +75,12 @@ void LevelEditorScene::loadResources() {
   AssetPool::addSpriteSheet("texture/atlas.png", sprs);
   this->sps = AssetPool::getSpritesheet("texture/atlas.png");
   if (this->sps) {
-    loggerInfo(ID, "Sprite sheet is not null");
+    LOG_INFO("Sprite sheet is not null");
     this->sprite = this->sps->getSprite(0);
   } else {
-    loggerError(ID, "Spritesheet is null");
+    LOG_ERROR("Spritesheet is null");
   }
-  loggerInfo(ID, "Loaded resources for LevelEditorScene");
+  LOG_INFO("Loaded resources for LevelEditorScene");
 }
 
 void LevelEditorScene::update(float deltaTime) {}

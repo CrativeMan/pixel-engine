@@ -1,9 +1,9 @@
 #include <GL/glew.h>
 
-#include "AssetPool.hpp"
+#include "../system/System.hpp"
 #include "Texture.hpp"
 #define STB_IMAGE_IMPLEMENTATION
-#include "../system/logger.h"
+#include "../system/logger.hpp"
 #include "stb_image.h"
 
 #define ID "texture"
@@ -24,7 +24,7 @@ void Texture::init(std::string path) {
   stbi_set_flip_vertically_on_load(true);
 
   int width, height, nrChannels;
-  unsigned char *data = stbi_load(AssetPool::getAssetPath(path).c_str(), &width,
+  unsigned char *data = stbi_load(sys::getAssetPath(path).c_str(), &width,
                                   &height, &nrChannels, 0);
 
   if (data) {
@@ -39,10 +39,10 @@ void Texture::init(std::string path) {
     glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format,
                  GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
-    loggerInfo(ID, "Loaded texture from path '%s'", path.c_str());
+    LOG_INFO("Loaded texture from path '%s'", path.c_str());
     this->id = texture;
   } else {
-    loggerError(ID, "Texture failed to load at path: %s", path.c_str());
+    LOG_ERROR("Texture failed to load at path: %s", path.c_str());
   }
 
   stbi_image_free(data);

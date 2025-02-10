@@ -1,8 +1,8 @@
 #include <GL/glew.h>
 
+#include "../system/System.hpp"
 #include "../system/fileHandler.h"
-#include "../system/logger.h"
-#include "AssetPool.hpp"
+#include "../system/logger.hpp"
 #include "Shader.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
@@ -18,10 +18,9 @@ void Shader::init(const char *vertexPath, const char *fragmentPath) {
   this->vertex = vertexPath;
   this->fragment = fragmentPath;
 
-  const char *vertexSource =
-      readFile(AssetPool::getAssetPath(vertexPath).c_str());
+  const char *vertexSource = readFile(sys::getAssetPath(vertexPath).c_str());
   const char *fragmentSource =
-      readFile(AssetPool::getAssetPath(fragmentPath).c_str());
+      readFile(sys::getAssetPath(fragmentPath).c_str());
 
   unsigned int vertex = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(vertex, 1, &vertexSource, NULL);
@@ -32,7 +31,7 @@ void Shader::init(const char *vertexPath, const char *fragmentPath) {
   glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
   if (!success) {
     glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-    loggerError(ID, "Vertex shader compilation failed\n%s\n", infoLog);
+    LOG_ERROR("Vertex shader compilation failed\n%s\n", infoLog);
   }
 
   unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
@@ -42,7 +41,7 @@ void Shader::init(const char *vertexPath, const char *fragmentPath) {
   glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
   if (!success) {
     glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-    loggerError(ID, "Fragment shader compilation failed\n%s\n", infoLog);
+    LOG_ERROR("Fragment shader compilation failed\n%s\n", infoLog);
   }
 
   unsigned int shader = glCreateProgram();
@@ -53,16 +52,16 @@ void Shader::init(const char *vertexPath, const char *fragmentPath) {
   glGetProgramiv(shader, GL_LINK_STATUS, &success);
   if (!success) {
     glGetProgramInfoLog(shader, 512, NULL, infoLog);
-    loggerError(ID, "Shader linking failed");
+    LOG_ERROR("Shader linking failed");
   }
 
   this->id = shader;
-  loggerInfo(ID, "Generating shader '%d'", this->id);
+  LOG_INFO("Generating shader '%d'", this->id);
 }
 
 void Shader::shutdown() {
   glDeleteProgram(this->id);
-  loggerInfo(ID, "Deleting shader '%d'", this->id);
+  LOG_INFO("Deleting shader '%d'", this->id);
 }
 
 void Shader::attach() { glUseProgram(this->id); }

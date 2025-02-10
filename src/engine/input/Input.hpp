@@ -1,7 +1,7 @@
 #ifndef INPUT_HPP
 #define INPUT_HPP
 
-#include "../system/logger.h"
+#include "../system/logger.hpp"
 #include <GLFW/glfw3.h>
 
 #define NUM_KEYS 350
@@ -24,7 +24,7 @@ public:
     if (key < NUM_KEYS)
       return keyPressed[key];
     else
-      loggerError("input", "Key %d is out of bounds from key arrays");
+      LOG_ERROR("Key %d is out of bounds from key arrays");
     return false;
   }
 

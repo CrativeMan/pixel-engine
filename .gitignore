@@ -1,4 +1,5 @@
 imgui.ini
+log_file.log
 obj/
 .direnv/
 bin/

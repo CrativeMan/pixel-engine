@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "logger.h"
+#include "logger.hpp"
 
 const char *readFile(const char *filepath) {
   FILE *file = fopen(filepath, "rb");
   if (file == NULL) {
-    loggerError("file", "Failed to open file '%s'", filepath);
+    LOG_ERROR("Failed to open file '%s'", filepath);
     return NULL;
   }
 
@@ -16,14 +16,14 @@ const char *readFile(const char *filepath) {
 
   char *buffer = (char *)malloc(fileSize + 1);
   if (buffer == NULL) {
-    loggerError("file", "Failed to alloc buffer");
+    LOG_ERROR("Failed to alloc buffer");
     fclose(file);
     return NULL;
   }
 
   size_t readSize = fread(buffer, 1, fileSize, file);
   if (readSize != fileSize) {
-    loggerError("file", "Failed to read file");
+    LOG_ERROR("Failed to read file");
     free(buffer);
     fclose(file);
     return NULL;
@@ -33,6 +33,6 @@ const char *readFile(const char *filepath) {
   fclose(file);
   const char *fileContents = (const char *)buffer;
 
-  loggerInfo("file", "Generated char* from file '%s'", filepath);
+  LOG_INFO("Generated char* from file '%s'", filepath);
   return fileContents;
 }

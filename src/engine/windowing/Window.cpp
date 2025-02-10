@@ -2,7 +2,7 @@
 
 #include "../header/typedefs.h"
 #include "../input/Input.hpp"
-#include "../system/logger.h"
+#include "../system/logger.hpp"
 #include "Window.hpp"
 #include <GLFW/glfw3.h>
 
@@ -16,10 +16,10 @@ Window::Window(int width, int height, std::string title) {
 }
 
 void Window::init(int width, int heigh, std::string title) {
-  loggerInfo(ID, "Initializing window");
+  LOG_INFO("Initializing window");
   // init glfw
   if (!glfwInit()) {
-    loggerError(ID, "Failed to initialize glfw. Aborting");
+    LOG_ERROR("Failed to initialize glfw. Aborting");
     assert(false);
   }
 
@@ -35,10 +35,10 @@ void Window::init(int width, int heigh, std::string title) {
   // create window
   this->id = glfwCreateWindow(width, heigh, title.c_str(), NULL, NULL);
   if (this->id == NULL) {
-    loggerError(ID, "Failed to create glfw window");
+    LOG_ERROR("Failed to create glfw window");
     assert(false);
   }
-  loggerInfo(ID, "Created window '%d'", this->id);
+  LOG_INFO("Created window '%d'", this->id);
 
   // callbacks
   glfwSetCursorPosCallback(this->id, MouseListener::mousePosCallback);
@@ -67,7 +67,7 @@ void Window::init(int width, int heigh, std::string title) {
 }
 
 void Window::shutdown() {
-  loggerInfo(ID, "Shuting down window '%d'", this->id);
+  LOG_INFO("Shuting down window '%d'", this->id);
   glfwDestroyWindow(this->id);
   this->ui.shutdown();
   glfwTerminate();
@@ -77,7 +77,7 @@ void Window::loop() {
   float beginTime = glfwGetTime();
   float endTime;
   float dt = -1.0f;
-  
+
   while (!glfwWindowShouldClose(this->id)) {
     // new ui frame
     if (this->ui.newFrame(this->id) == 1)
