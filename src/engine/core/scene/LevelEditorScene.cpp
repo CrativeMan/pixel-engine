@@ -5,6 +5,7 @@
 #include <cwchar>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
+#include <memory>
 
 #include "../../assets/AssetPool.hpp"
 #include "../../system/logger.h"
@@ -14,13 +15,12 @@
 #define ID "les"
 
 float vertices[] = {
-    // positions            // colors         // texture coords
+    // positions          // colors         // texture coords
     200.0f, 200.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
     200.0f, -0.0f,  0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // bottom right
     -0.0f,  -0.0f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
     -0.0f,  200.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f  // top left
 };
-
 unsigned int indices[] = {
     0, 1, 3, // first triangle
     1, 2, 3  // second triangle
@@ -30,10 +30,8 @@ LevelEditorScene::LevelEditorScene() {}
 
 void LevelEditorScene::init() {
   this->loadResources();
-  this->shader =
-      AssetPool::getShader("shader/vertex.glsl", "shader/fragment.glsl");
-  this->texture = AssetPool::getTexture("textures/atlas.png");
   this->camera.init(glm::vec2(-300, -300));
+
   unsigned int vao, vbo, ebo;
   glGenVertexArrays(1, &vao);
   glGenBuffers(1, &vbo);
@@ -67,8 +65,21 @@ void LevelEditorScene::init() {
 }
 
 void LevelEditorScene::loadResources() {
-  AssetPool::getShader("shader/vertex.glsl", "shader/fragment.glsl");
-  AssetPool::getTexture("textures/atlas.png");
+  this->shader =
+      AssetPool::getShader("shader/vertex.glsl", "shader/fragment.glsl");
+  this->texture = AssetPool::getTexture("textures/atlas.png");
+
+  // this should be reconsidered
+  std::shared_ptr<Spritesheet> sprs =
+      std::make_shared<Spritesheet>(this->texture, 16, 16, 100, 0);
+  AssetPool::addSpriteSheet("texture/atlas.png", sprs);
+  this->sps = AssetPool::getSpritesheet("texture/atlas.png");
+  if (this->sps) {
+    loggerInfo(ID, "Sprite sheet is not null");
+    this->sprite = this->sps->getSprite(0);
+  } else {
+    loggerError(ID, "Spritesheet is null");
+  }
   loggerInfo(ID, "Loaded resources for LevelEditorScene");
 }
 
@@ -77,7 +88,7 @@ void LevelEditorScene::update(float deltaTime) {}
 void LevelEditorScene::render() {
   this->shader->attach();
   glBindVertexArray(this->vao);
-  glBindTexture(GL_TEXTURE_2D, this->texture->id);
+  glBindTexture(GL_TEXTURE_2D, this->sprite->getTexId());
 
   this->shader->setMat4("uProjectionMatrix",
                         this->camera.getProjectionMatrix());

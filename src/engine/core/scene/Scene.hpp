@@ -2,6 +2,8 @@
 #define SCENE_HPP
 
 #include "../../assets/Shader.hpp"
+#include "../../assets/Sprite.hpp"
+#include "../../assets/Spritesheet.hpp"
 #include "../../assets/Texture.hpp"
 #include "../../rendering/Camera.hpp"
 #include "../../rendering/Renderer.hpp"
@@ -39,6 +41,8 @@ private:
   unsigned int vao, vbo, ebo;
   Shader *shader;
   Texture *texture;
+  Sprite *sprite;
+  Spritesheet *sps;
 
   void loadResources();
 };
