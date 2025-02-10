@@ -17,11 +17,13 @@ Window::Window(int width, int height, std::string title) {
 
 void Window::init(int width, int heigh, std::string title) {
   loggerInfo(ID, "Initializing window");
+  // init glfw
   if (!glfwInit()) {
     loggerError(ID, "Failed to initialize glfw. Aborting");
     assert(false);
   }
 
+  // init window
   glfwDefaultWindowHints();
   glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
   glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
@@ -30,6 +32,7 @@ void Window::init(int width, int heigh, std::string title) {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+  // create window
   this->id = glfwCreateWindow(width, heigh, title.c_str(), NULL, NULL);
   if (this->id == NULL) {
     loggerError(ID, "Failed to create glfw window");
@@ -37,6 +40,7 @@ void Window::init(int width, int heigh, std::string title) {
   }
   loggerInfo(ID, "Created window '%d'", this->id);
 
+  // callbacks
   glfwSetCursorPosCallback(this->id, MouseListener::mousePosCallback);
   glfwSetMouseButtonCallback(this->id, MouseListener::mouseButtonCallback);
   glfwSetScrollCallback(this->id, MouseListener::mouseScrollCallback);
@@ -44,18 +48,22 @@ void Window::init(int width, int heigh, std::string title) {
 
   glfwMakeContextCurrent(this->id);
 
+  // init glew
   ASSERT(glewInit() == GLEW_OK, "Failed to initialize glew. Aborting");
+
+  // depth and blending for transparency
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_ALWAYS);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   glfwSwapInterval(1);
   glfwShowWindow(this->id);
   glViewport(0, 0, width, heigh);
 
+  // init ui and scenes
   this->ui.init(this->id);
   this->scenemanager.changeScene(std::make_unique<LevelEditorScene>());
-  glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_ALWAYS);
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void Window::shutdown() {
@@ -69,24 +77,28 @@ void Window::loop() {
   float beginTime = glfwGetTime();
   float endTime;
   float dt = -1.0f;
+  
   while (!glfwWindowShouldClose(this->id)) {
-    if (glfwGetWindowAttrib(this->id, GLFW_ICONIFIED) != 0) {
-      ImGui_ImplGlfw_Sleep(10);
+    // new ui frame
+    if (this->ui.newFrame(this->id) == 1)
       continue;
-    }
 
+    // input handling
     if (KeyListener::isKeyPressed(GLFW_KEY_Q))
       glfwSetWindowShouldClose(this->id, GLFW_TRUE);
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // update and rendering
     this->scenemanager.update(dt);
     this->ui.render();
 
+    // udate buffers and poll events
     glfwSwapBuffers(this->id);
     glfwPollEvents();
 
+    // deltatime
     endTime = glfwGetTime();
     dt = endTime - beginTime;
     beginTime = endTime;

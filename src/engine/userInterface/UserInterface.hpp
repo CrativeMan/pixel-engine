@@ -10,6 +10,7 @@ class UserInterface {
 public:
   UserInterface();
   void init(GLFWwindow *w);
+  int newFrame(GLFWwindow *id);
   void render();
   void shutdown();
 
