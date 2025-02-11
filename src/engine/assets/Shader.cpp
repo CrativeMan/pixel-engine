@@ -1,8 +1,8 @@
 #include <GL/glew.h>
 
-#include "../system/System.hpp"
-#include "../system/fileHandler.h"
-#include "../system/logger.hpp"
+#include "../../system/System.hpp"
+#include "../../system/fileHandler.h"
+#include "../../system/logger.hpp"
 #include "Shader.hpp"
 #include <glm/gtc/type_ptr.hpp>
 

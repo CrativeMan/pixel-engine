@@ -2,7 +2,7 @@
 
 #include "../header/typedefs.h"
 #include "../input/Input.hpp"
-#include "../system/logger.hpp"
+#include "../../system/logger.hpp"
 #include "Window.hpp"
 #include <GLFW/glfw3.h>
 

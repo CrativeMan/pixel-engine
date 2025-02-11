@@ -5,7 +5,6 @@
 #include <cwchar>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
-#include <memory>
 
 #include "../../assets/AssetPool.hpp"
 #include "../../system/logger.hpp"

@@ -1,7 +1,7 @@
 #ifndef INPUT_HPP
 #define INPUT_HPP
 
-#include "../system/logger.hpp"
+#include "../../system/logger.hpp"
 #include <GLFW/glfw3.h>
 
 #define NUM_KEYS 350

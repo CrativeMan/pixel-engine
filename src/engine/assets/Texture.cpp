@@ -1,9 +1,9 @@
 #include <GL/glew.h>
 
-#include "../system/System.hpp"
+#include "../../system/System.hpp"
 #include "Texture.hpp"
 #define STB_IMAGE_IMPLEMENTATION
-#include "../system/logger.hpp"
+#include "../../system/logger.hpp"
 #include "stb_image.h"
 
 #define ID "texture"

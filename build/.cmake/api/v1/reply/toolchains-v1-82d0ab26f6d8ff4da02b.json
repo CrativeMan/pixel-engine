@@ -1,0 +1,148 @@
+{
+	"kind" : "toolchains",
+	"toolchains" : 
+	[
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"/nix/store/px2nj16i5gc3d4mnw5l1nclfdxhry61p-python3-3.12.7/include",
+						"/nix/store/apm2l8lw2qp40x19nrck7q6hw55lrvfq-gtest-1.15.2-dev/include",
+						"/nix/store/cli08r86rpaja76pyvd6yjd2b7m1pbk2-glfw-3.4/include",
+						"/nix/store/mnpvi1mvwyf0wsyy5wca3kfwxv2j4pd9-libglvnd-1.7.0-dev/include",
+						"/nix/store/g2jjj2jswml9244nds6zn4q8d95pdarq-glew-2.2.0-dev/include",
+						"/nix/store/a2lsp3i93dl2bz0w404bdi9ydcnpvz52-glu-9.0.3-dev/include",
+						"/nix/store/dlmdgwrs4kma9r4wzw6761z6ig6r3dfk-glm-1.0.1/include",
+						"/nix/store/nyqd4vccwqnhnpz7g3x7diby6a1w1r1l-imgui-1.91.4/include",
+						"/nix/store/ci03ch485j0pxr70f1gz3dgnjy0nq2fc-gdb-15.2/include",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/include",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include-fixed",
+						"/nix/store/aax0hx68i2ikhpf27hdm6a2a209d4s6p-glibc-2.40-36-dev/include"
+					],
+					"linkDirectories" : 
+					[
+						"/nix/store/px2nj16i5gc3d4mnw5l1nclfdxhry61p-python3-3.12.7/lib",
+						"/nix/store/bywvcnpcdbhak9r8x1l3vw54ccbiisps-gtest-1.15.2/lib",
+						"/nix/store/cli08r86rpaja76pyvd6yjd2b7m1pbk2-glfw-3.4/lib",
+						"/nix/store/ymhcg6x5jrw3hx8ik1cji6awiybgp9f7-libglvnd-1.7.0/lib",
+						"/nix/store/ly5p7zz86gb19f0qk60rrylqxjs3qkc4-glu-9.0.3/lib",
+						"/nix/store/ijxnrr0jsf7fyfri6qf6l8g3824yfilh-glew-2.2.0/lib",
+						"/nix/store/dlmdgwrs4kma9r4wzw6761z6ig6r3dfk-glm-1.0.1/lib",
+						"/nix/store/9abb6k6hfbvpyddzrjg8kbna0jzsw2vj-imgui-1.91.4-lib/lib",
+						"/nix/store/ci03ch485j0pxr70f1gz3dgnjy0nq2fc-gdb-15.2/lib",
+						"/nix/store/pacbfvpzqz2mksby36awvbcn051zcji3-glibc-2.40-36/lib",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0",
+						"/nix/store/97f3gw9vpyxvwjv2i673isvg92q65mwn-gcc-13.3.0-lib/lib",
+						"/nix/store/9bacph866qhmr2zfib1h49jixq5hhd01-binutils-wrapper-2.43.1/bin",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib64",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"gcc",
+						"gcc_s",
+						"c",
+						"gcc",
+						"gcc_s"
+					]
+				},
+				"path" : "/nix/store/3ix5h74n7ar9950vwzp4dxmil70pmx0k-gcc-wrapper-13.3.0/bin/gcc",
+				"version" : "13.3.0"
+			},
+			"language" : "C",
+			"sourceFileExtensions" : 
+			[
+				"c",
+				"m"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"/nix/store/px2nj16i5gc3d4mnw5l1nclfdxhry61p-python3-3.12.7/include",
+						"/nix/store/apm2l8lw2qp40x19nrck7q6hw55lrvfq-gtest-1.15.2-dev/include",
+						"/nix/store/cli08r86rpaja76pyvd6yjd2b7m1pbk2-glfw-3.4/include",
+						"/nix/store/mnpvi1mvwyf0wsyy5wca3kfwxv2j4pd9-libglvnd-1.7.0-dev/include",
+						"/nix/store/g2jjj2jswml9244nds6zn4q8d95pdarq-glew-2.2.0-dev/include",
+						"/nix/store/a2lsp3i93dl2bz0w404bdi9ydcnpvz52-glu-9.0.3-dev/include",
+						"/nix/store/dlmdgwrs4kma9r4wzw6761z6ig6r3dfk-glm-1.0.1/include",
+						"/nix/store/nyqd4vccwqnhnpz7g3x7diby6a1w1r1l-imgui-1.91.4/include",
+						"/nix/store/ci03ch485j0pxr70f1gz3dgnjy0nq2fc-gdb-15.2/include",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/include/c++/13.3.0",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/include/c++/13.3.0/x86_64-unknown-linux-gnu",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/include/c++/13.3.0/backward",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/include",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include-fixed",
+						"/nix/store/aax0hx68i2ikhpf27hdm6a2a209d4s6p-glibc-2.40-36-dev/include"
+					],
+					"linkDirectories" : 
+					[
+						"/nix/store/px2nj16i5gc3d4mnw5l1nclfdxhry61p-python3-3.12.7/lib",
+						"/nix/store/bywvcnpcdbhak9r8x1l3vw54ccbiisps-gtest-1.15.2/lib",
+						"/nix/store/cli08r86rpaja76pyvd6yjd2b7m1pbk2-glfw-3.4/lib",
+						"/nix/store/ymhcg6x5jrw3hx8ik1cji6awiybgp9f7-libglvnd-1.7.0/lib",
+						"/nix/store/ly5p7zz86gb19f0qk60rrylqxjs3qkc4-glu-9.0.3/lib",
+						"/nix/store/ijxnrr0jsf7fyfri6qf6l8g3824yfilh-glew-2.2.0/lib",
+						"/nix/store/dlmdgwrs4kma9r4wzw6761z6ig6r3dfk-glm-1.0.1/lib",
+						"/nix/store/9abb6k6hfbvpyddzrjg8kbna0jzsw2vj-imgui-1.91.4-lib/lib",
+						"/nix/store/ci03ch485j0pxr70f1gz3dgnjy0nq2fc-gdb-15.2/lib",
+						"/nix/store/pacbfvpzqz2mksby36awvbcn051zcji3-glibc-2.40-36/lib",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0",
+						"/nix/store/97f3gw9vpyxvwjv2i673isvg92q65mwn-gcc-13.3.0-lib/lib",
+						"/nix/store/9bacph866qhmr2zfib1h49jixq5hhd01-binutils-wrapper-2.43.1/bin",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib64",
+						"/nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"m",
+						"gcc_s",
+						"gcc",
+						"c",
+						"gcc_s",
+						"gcc"
+					]
+				},
+				"path" : "/nix/store/3ix5h74n7ar9950vwzp4dxmil70pmx0k-gcc-wrapper-13.3.0/bin/g++",
+				"version" : "13.3.0"
+			},
+			"language" : "CXX",
+			"sourceFileExtensions" : 
+			[
+				"C",
+				"M",
+				"c++",
+				"cc",
+				"cpp",
+				"cxx",
+				"mm",
+				"mpp",
+				"CPP",
+				"ixx",
+				"cppm",
+				"ccm",
+				"cxxm",
+				"c++m"
+			]
+		}
+	],
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}
