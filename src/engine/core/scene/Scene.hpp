@@ -2,18 +2,19 @@
 #define SCENE_HPP
 
 #include "../../assets/Shader.hpp"
-#include "../../assets/Sprite.hpp"
-#include "../../assets/Spritesheet.hpp"
-#include "../../assets/Texture.hpp"
 #include "../../rendering/Camera.hpp"
 #include "../../rendering/Renderer.hpp"
+#include "../esc/GameObject.hpp"
 
 #include <memory>
+#include <vector>
 
 class Scene {
 protected:
   Renderer renderer;
   Camera camera;
+  std::vector<std::unique_ptr<GameObject>> gameObjects;
+  GameObject *activeGameObject = nullptr;
   bool isRunning = false;
   bool levelLoaded = false;
 
@@ -21,8 +22,8 @@ public:
   Scene() = default;
   virtual ~Scene() = default;
   virtual void init() = 0;
-  virtual void start() {}
-  virtual void addGameObject() {}
+  void start();
+  virtual void addGameObject(GameObject *go);
   virtual void update(float deltaTime) = 0;
   virtual void render() = 0;
 
@@ -40,9 +41,6 @@ public:
 private:
   unsigned int vao, vbo, ebo;
   Shader *shader;
-  Texture *texture;
-  Sprite *sprite;
-  Spritesheet *sps;
 
   void loadResources();
 };

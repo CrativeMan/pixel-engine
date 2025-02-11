@@ -67,19 +67,18 @@ void LevelEditorScene::init() {
 void LevelEditorScene::loadResources() {
   this->shader =
       AssetPool::getShader("shader/vertex.glsl", "shader/fragment.glsl");
-  this->texture = AssetPool::getTexture("textures/atlas.png");
 
   // this should be reconsidered
-  std::shared_ptr<Spritesheet> sprs =
-      std::make_shared<Spritesheet>(this->texture, 16, 16, 100, 0);
-  AssetPool::addSpriteSheet("texture/atlas.png", sprs);
-  this->sps = AssetPool::getSpritesheet("texture/atlas.png");
-  if (this->sps) {
-    LOG_INFO("Sprite sheet is not null");
-    this->sprite = this->sps->getSprite(0);
-  } else {
-    LOG_ERROR("Spritesheet is null");
-  }
+  // std::shared_ptr<Spritesheet> sprs =
+  //     std::make_shared<Spritesheet>(this->texture, 16, 16, 100, 0);
+  // AssetPool::addSpriteSheet("texture/atlas.png", sprs);
+  // this->sps = AssetPool::getSpritesheet("texture/atlas.png");
+  // if (this->sps) {
+  //   LOG_INFO("Sprite sheet is not null");
+  //   this->sprite = this->sps->getSprite(0);
+  // } else {
+  //   LOG_ERROR("Spritesheet is null");
+  // }
   LOG_INFO("Loaded resources for LevelEditorScene");
 }
 
@@ -88,7 +87,7 @@ void LevelEditorScene::update(float deltaTime) {}
 void LevelEditorScene::render() {
   this->shader->attach();
   glBindVertexArray(this->vao);
-  glBindTexture(GL_TEXTURE_2D, this->sprite->getTexId());
+  //  glBindTexture(GL_TEXTURE_2D, this->sprite->getTexId());
 
   this->shader->setMat4("uProjectionMatrix",
                         this->camera.getProjectionMatrix());

@@ -11,17 +11,23 @@
 #include <sstream>
 
 #define LOG_TRACE(fmt, ...)                                                    \
-  Logger::getInstance().log(LogLevel::TRACE, fmt, ##__VA_ARGS__)
+  Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::TRACE, fmt,     \
+                            ##__VA_ARGS__)
 #define LOG_DEBUG(fmt, ...)                                                    \
-  Logger::getInstance().log(LogLevel::DEBUG, fmt, ##__VA_ARGS__)
+  Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::DEBUG, fmt,     \
+                            ##__VA_ARGS__)
 #define LOG_INFO(fmt, ...)                                                     \
-  Logger::getInstance().log(LogLevel::INFO, fmt, ##__VA_ARGS__)
+  Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::INFO, fmt,      \
+                            ##__VA_ARGS__)
 #define LOG_WARN(fmt, ...)                                                     \
-  Logger::getInstance().log(LogLevel::WARN, fmt, ##__VA_ARGS__)
+  Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::WARN, fmt,      \
+                            ##__VA_ARGS__)
 #define LOG_ERROR(fmt, ...)                                                    \
-  Logger::getInstance().log(LogLevel::ERROR, fmt, ##__VA_ARGS__)
+  Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::ERROR, fmt,     \
+                            ##__VA_ARGS__)
 #define LOG_CRITICAL(fmt, ...)                                                 \
-  Logger::getInstance().log(LogLevel::CRITICAL, fmt, ##__VA_ARGS__)
+  Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::CRITICAL, fmt,  \
+                            ##__VA_ARGS__)
 
 enum class LogLevel { TRACE, DEBUG, INFO, WARN, ERROR, CRITICAL };
 
@@ -34,7 +40,8 @@ public:
 
   void setLogLevel(LogLevel level) { logLevel = level; }
 
-  void log(LogLevel level, const char *format, ...) {
+  void log(const char *file, int line, LogLevel level, const char *format,
+           ...) {
     if (level < logLevel)
       return;
 
@@ -45,7 +52,7 @@ public:
     std::string message = formatString(format, args);
     va_end(args);
 
-    std::string formattedMessage = formatLogMessage(level, message);
+    std::string formattedMessage = formatLogMessage(level, message, file, line);
 
     std::cout << getColor(level) << formattedMessage << "\033[0m" << std::endl;
     if (fileStream.is_open()) {
@@ -97,10 +104,11 @@ private:
     return std::string(buffer);
   }
 
-  std::string formatLogMessage(LogLevel level, const std::string &message) {
+  std::string formatLogMessage(LogLevel level, const std::string &message,
+                               const char *file, int line) {
     std::ostringstream oss;
-    oss << "[" << currentDateTime() << "] [" << logLevelToString(level) << "] "
-        << message;
+    oss << "[" << currentDateTime() << "] [" << logLevelToString(level) << "] ["
+        << file << "|" << line << "] " << message;
     return oss.str();
   }
 

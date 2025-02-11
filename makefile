@@ -7,5 +7,7 @@ debug:
 trace:
 	./build/bin/PixelEngine trace
 
-count: 
+count:
 	cloc --exclude-list-file=.clocignore .
+
+.PHONY: all build debug trace count
