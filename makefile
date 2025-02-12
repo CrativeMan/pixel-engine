@@ -1,12 +1,12 @@
-CXX      := -c++
-CXXFLAGS := -pedantic-errors -Wall -Wextra -Werror
-LDFLAGS  := -L/usr/lib -lstdc++ -lm -lGL -lGLEW -lglfw -limgui
-BUILD    := ./build
-OBJ_DIR  := $(BUILD)/objects
-APP_DIR  := $(BUILD)/bin
-TARGET   := main
-INCLUDE  := -Iinclude/
-SRC      := $(shell find . -name "*.cpp" | sort -k 1nr | cut -f2-)
+CXX            := -c++
+CXXFLAGS       := -pedantic-errors -Wall -Wextra -Werror
+LDFLAGS        := -L/usr/lib -lstdc++ -lm -lGL -lGLEW -lglfw -limgui
+BUILD          := ./build
+OBJ_DIR        := $(BUILD)/objects
+APP_DIR        := $(BUILD)/bin
+TARGET         := main
+INCLUDE        := -Iinclude/
+SRC            := $(shell find . -name "*.cpp" | sort -k 1nr | cut -f2-)
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 DEPENDENCIES \
@@ -31,9 +31,11 @@ build:
 	@mkdir -p $(OBJ_DIR)
 
 debug: CXXFLAGS += -DDEBUG -g
+debug: TARGET := debug
 debug: all
 
 release: CXXFLAGS += -O2
+release: TARGET := release
 release: all
 
 clean:

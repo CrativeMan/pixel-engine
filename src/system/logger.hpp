@@ -14,8 +14,8 @@
   Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::TRACE, fmt,     \
                             ##__VA_ARGS__)
 #define LOG_DEBUG(fmt, ...)                                                    \
-  Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::DEBUG, fmt,     \
-                            ##__VA_ARGS__)
+  Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::DEBUG_LEVEL,    \
+                            fmt, ##__VA_ARGS__)
 #define LOG_INFO(fmt, ...)                                                     \
   Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::INFO, fmt,      \
                             ##__VA_ARGS__)
@@ -29,7 +29,7 @@
   Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::CRITICAL, fmt,  \
                             ##__VA_ARGS__)
 
-enum class LogLevel { TRACE, DEBUG, INFO, WARN, ERROR, CRITICAL };
+enum class LogLevel { TRACE, DEBUG_LEVEL, INFO, WARN, ERROR, CRITICAL };
 
 class Logger {
 public:
@@ -68,7 +68,7 @@ public:
   static void setLoggerLevel(int argc, char **argv) {
     if (argc > 1) {
       if (!strcmp(argv[1], "debug")) {
-        Logger::getInstance().setLogLevel(LogLevel::DEBUG);
+        Logger::getInstance().setLogLevel(LogLevel::DEBUG_LEVEL);
       } else if (!strcmp(argv[1], "trace")) {
         Logger::getInstance().setLogLevel(LogLevel::TRACE);
       }
@@ -107,8 +107,14 @@ private:
   std::string formatLogMessage(LogLevel level, const std::string &message,
                                const char *file, int line) {
     std::ostringstream oss;
-    oss << "[" << currentDateTime() << "] [" << logLevelToString(level) << "] ["
-        << file << "|" << line << "] " << message;
+    oss << "[" << currentDateTime() << "] [" << logLevelToString(level) << "] ";
+#ifdef DEBUG
+    oss << "[" << file << "|" << line << "] ";
+#else
+    (void)file;
+    (void)line;
+#endif // DEBUG
+    oss << message;
     return oss.str();
   }
 
@@ -124,7 +130,7 @@ private:
     switch (level) {
     case LogLevel::TRACE:
       return "TRACE";
-    case LogLevel::DEBUG:
+    case LogLevel::DEBUG_LEVEL:
       return "DEBUG";
     case LogLevel::INFO:
       return "INFO";
@@ -143,7 +149,7 @@ private:
     switch (level) {
     case LogLevel::TRACE:
       return "\033[36m"; // Cyan
-    case LogLevel::DEBUG:
+    case LogLevel::DEBUG_LEVEL:
       return "\033[90m"; // Gray
     case LogLevel::INFO:
       return "";
