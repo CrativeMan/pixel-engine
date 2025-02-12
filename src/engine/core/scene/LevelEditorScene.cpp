@@ -8,6 +8,7 @@
 
 #include "../../../system/logger.hpp"
 #include "../../assets/AssetPool.hpp"
+#include "../ecs/Components.hpp"
 
 #include "Scene.hpp"
 
@@ -30,6 +31,11 @@ LevelEditorScene::LevelEditorScene() {}
 void LevelEditorScene::init() {
   this->loadResources();
   this->camera.init(glm::vec2(-300, -300));
+  LOG_TRACE("Creating test object");
+  this->testObj = new GameObject("testObject");
+  this->testObj->addComponent(new SpriteRenderComponent());
+  this->testObj->addComponent(new FontRendererComponenet());
+  this->addGameObject(this->testObj);
 
   unsigned int vao, vbo, ebo;
   glGenVertexArrays(1, &vao);
@@ -83,7 +89,7 @@ void LevelEditorScene::loadResources() {
 
 void LevelEditorScene::update(float deltaTime) { (void)deltaTime; }
 
-void LevelEditorScene::render() {
+void LevelEditorScene::render(float dt) {
   this->shader->attach();
   glBindVertexArray(this->vao);
   //  glBindTexture(GL_TEXTURE_2D, this->sprite->getTexId());
@@ -99,6 +105,18 @@ void LevelEditorScene::render() {
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
   this->shader->detach();
+
+  if (!first) {
+    LOG_TRACE("Creating game object in loop");
+    GameObject *go = new GameObject("loopObject");
+    go->addComponent(new SpriteRenderComponent());
+    this->addGameObject(go);
+    first = true;
+  }
+
+  for (GameObject *go : this->gameObjects) {
+    go->update(dt);
+  }
 }
 
 LevelEditorScene::~LevelEditorScene() {

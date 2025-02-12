@@ -5,7 +5,7 @@ BUILD          := ./build
 OBJ_DIR        := $(BUILD)/objects
 APP_DIR        := $(BUILD)/bin
 TARGET         := main
-INCLUDE        := -Iinclude/
+INCLUDE        := -I/home/$(USER)/dev/cpp/pixel-engine/src
 SRC            := $(shell find . -name "*.cpp" | sort -k 1nr | cut -f2-)
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)

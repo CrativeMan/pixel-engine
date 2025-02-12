@@ -1,4 +1,4 @@
-#include "Component.hpp"
+#include "../ecs.hpp"
 
 void Component::start() {}
 void Component::update(float dt) { (void)dt; }

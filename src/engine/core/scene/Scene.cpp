@@ -1,26 +1,24 @@
 #include "Scene.hpp"
-#include <memory>
+#include "../ecs/ecs.hpp"
 
 void Scene::init() {}
 
 void Scene::start() {
-  for (std::unique_ptr<GameObject> &go : this->gameObjects) {
+  for (GameObject *go : gameObjects) {
     go->start();
-    // this->renderer.addGameObject(go);
   }
   this->isRunning = true;
 }
 
 void Scene::addGameObject(GameObject *go) {
-  if (!isRunning)
-    this->gameObjects.push_back(std::unique_ptr<GameObject>(go));
-  else {
-    this->gameObjects.push_back(std::unique_ptr<GameObject>(go));
-    this->gameObjects.back()->start();
-    // this->renderer.addGameObject(this->gameObjects.back());
+  if (!isRunning) {
+    gameObjects.push_back(go);
+  } else {
+    gameObjects.push_back(go);
+    go->start();
   }
 }
 
 void Scene::update(float deltaTime) { (void)deltaTime; }
 
-void Scene::render() {}
+void Scene::render(float dt) { (void)dt; }

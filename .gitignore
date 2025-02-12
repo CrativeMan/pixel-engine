@@ -2,6 +2,5 @@ imgui.ini
 obj/
 .direnv/
 bin/
-.vscode/
 build/
 *.log

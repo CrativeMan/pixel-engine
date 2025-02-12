@@ -13,9 +13,6 @@
 #define LOG_TRACE(fmt, ...)                                                    \
   Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::TRACE, fmt,     \
                             ##__VA_ARGS__)
-#define LOG_DEBUG(fmt, ...)                                                    \
-  Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::DEBUG_LEVEL,    \
-                            fmt, ##__VA_ARGS__)
 #define LOG_INFO(fmt, ...)                                                     \
   Logger::getInstance().log(__FILE_NAME__, __LINE__, LogLevel::INFO, fmt,      \
                             ##__VA_ARGS__)
@@ -65,21 +62,12 @@ public:
     fileStream.open(filename, std::ios::app);
   }
 
-  static void setLoggerLevel(int argc, char **argv) {
-    if (argc > 1) {
-      if (!strcmp(argv[1], "debug")) {
-        Logger::getInstance().setLogLevel(LogLevel::DEBUG_LEVEL);
-      } else if (!strcmp(argv[1], "trace")) {
-        Logger::getInstance().setLogLevel(LogLevel::TRACE);
-      }
-    } else {
-      Logger::getInstance().setLogLevel(LogLevel::INFO);
-    }
+  static void setLoggerLevel(LogLevel level) {
+    Logger::getInstance().setLogLevel(level);
   }
 
   static void testLogger() {
     LOG_TRACE("Testing testing");
-    LOG_DEBUG("Testing testing");
     LOG_INFO("Testing testing");
     LOG_WARN("Testing testing");
     LOG_ERROR("Testing testing");

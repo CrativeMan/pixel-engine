@@ -3,31 +3,28 @@
 
 #include "../../assets/Shader.hpp"
 #include "../../rendering/Camera.hpp"
-#include "../../rendering/Renderer.hpp"
-#include "../esc/GameObject.hpp"
+#include "../ecs/ecs.hpp"
 
 #include <memory>
 #include <vector>
 
 class Scene {
 protected:
-  Renderer renderer;
   Camera camera;
-  std::vector<std::unique_ptr<GameObject>> gameObjects;
-  GameObject *activeGameObject = nullptr;
-  bool isRunning = false;
-  bool levelLoaded = false;
+  std::vector<GameObject *> gameObjects;
 
 public:
   Scene() = default;
   virtual ~Scene() = default;
   virtual void init() = 0;
   void start();
+
   virtual void addGameObject(GameObject *go);
   virtual void update(float deltaTime) = 0;
-  virtual void render() = 0;
+  virtual void render(float dt) = 0;
 
 private:
+  bool isRunning = false;
 };
 
 class LevelEditorScene : public Scene {
@@ -36,11 +33,13 @@ public:
   ~LevelEditorScene();
   void init() override;
   void update(float deltaTime) override;
-  void render() override;
+  void render(float dt) override;
 
 private:
+  bool first = false;
   unsigned int vao, vbo, ebo;
   Shader *shader;
+  GameObject *testObj;
 
   void loadResources();
 };

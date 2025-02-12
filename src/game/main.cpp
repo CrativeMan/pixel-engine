@@ -7,9 +7,13 @@
 
 #define ID "engine"
 
-int main(int argc, char **argv) {
+int main() {
   Logger::getInstance().setLogFile(LOG_FILE_PATH);
-  Logger::setLoggerLevel(argc, argv);
+#ifdef DEBUG
+  Logger::setLoggerLevel(LogLevel::TRACE);
+#else
+  Logger::setLoggerLevel(LogLevel::INFO);
+#endif
 
   LOG_INFO("Starting engine");
   Window window;
