@@ -8,7 +8,7 @@ class Spritesheet {
 public:
   Spritesheet(Texture *texture, int spriteWidth, int spriteHeight,
               int numSprites, int spacing);
-  Sprite *getSprite(int index);
+  Sprite *getSprite(long unsigned int index);
   size_t size();
 
 private:

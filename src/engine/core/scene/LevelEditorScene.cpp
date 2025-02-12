@@ -6,8 +6,8 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
 
+#include "../../../system/logger.hpp"
 #include "../../assets/AssetPool.hpp"
-#include "../../system/logger.hpp"
 
 #include "Scene.hpp"
 
@@ -81,7 +81,7 @@ void LevelEditorScene::loadResources() {
   LOG_INFO("Loaded resources for LevelEditorScene");
 }
 
-void LevelEditorScene::update(float deltaTime) {}
+void LevelEditorScene::update(float deltaTime) { (void)deltaTime; }
 
 void LevelEditorScene::render() {
   this->shader->attach();

@@ -4,4 +4,4 @@ void SpriteRenderComponent::start() {
   // this->lastTransform = this->parent.get
 }
 
-void SpriteRenderComponent::update(float dt) {}
+void SpriteRenderComponent::update(float dt) { (void)dt; }

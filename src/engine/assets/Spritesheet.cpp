@@ -38,8 +38,8 @@ Spritesheet::Spritesheet(Texture *texture, int spriteWidth, int spriteHeight,
   }
 }
 
-Sprite *Spritesheet::getSprite(int index) {
-  if (index < 0 || index >= sprites.size())
+Sprite *Spritesheet::getSprite(long unsigned int index) {
+  if (index >= sprites.size())
     return nullptr;
 
   return this->sprites[index];

@@ -21,6 +21,6 @@ void Scene::addGameObject(GameObject *go) {
   }
 }
 
-void Scene::update(float deltaTime) {}
+void Scene::update(float deltaTime) { (void)deltaTime; }
 
 void Scene::render() {}
