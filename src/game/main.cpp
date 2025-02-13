@@ -16,10 +16,10 @@ int main() {
 #endif
 
   LOG_INFO("Starting engine");
-  Window window;
-  window.init(1920, 1080, "engine");
-  window.loop();
-  window.shutdown();
+  Window *window = Window::get();
+  window->init(1920, 1080, "engine");
+  window->loop();
+  window->shutdown();
   LOG_INFO("Shutting down engine");
   return 0;
 }

@@ -8,11 +8,14 @@
 
 #define ID "window"
 
-Window::Window(int width, int height, std::string title) {
-  this->width = width;
-  this->height = height;
-  this->title = title.c_str();
-  init(width, height, title);
+Window *Window::window = nullptr;
+SceneManager *Window::scenemanager = nullptr;
+
+Window *Window::get() {
+  if (Window::window != nullptr) {
+    Window::window = new Window();
+  }
+  return Window::window;
 }
 
 void Window::init(int width, int heigh, std::string title) {
@@ -63,7 +66,7 @@ void Window::init(int width, int heigh, std::string title) {
 
   // init ui and scenes
   this->ui.init(this->id);
-  this->scenemanager.changeScene(std::make_unique<LevelEditorScene>());
+  this->scenemanager->changeScene(std::make_unique<LevelEditorScene>());
 }
 
 void Window::shutdown() {
@@ -91,7 +94,7 @@ void Window::loop() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // update and rendering
-    this->scenemanager.update(dt);
+    this->scenemanager->update(dt);
     this->ui.render();
 
     // udate buffers and poll events

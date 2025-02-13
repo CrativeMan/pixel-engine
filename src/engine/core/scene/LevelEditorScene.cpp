@@ -5,6 +5,8 @@
 #include <cwchar>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
+#include <iostream>
+#include <string>
 
 #include "../../../system/logger.hpp"
 #include "../../assets/AssetPool.hpp"
@@ -14,59 +16,33 @@
 
 #define ID "les"
 
-float vertices[] = {
-    // positions          // colors         // texture coords
-    200.0f, 200.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
-    200.0f, -0.0f,  0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // bottom right
-    -0.0f,  -0.0f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
-    -0.0f,  200.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f  // top left
-};
-unsigned int indices[] = {
-    0, 1, 3, // first triangle
-    1, 2, 3  // second triangle
-};
-
 LevelEditorScene::LevelEditorScene() {}
 
 void LevelEditorScene::init() {
   this->loadResources();
-  this->camera.init(glm::vec2(-300, -300));
-  LOG_TRACE("Creating test object");
-  this->testObj = new GameObject("testObject");
-  this->testObj->addComponent(new SpriteRenderComponent());
-  this->testObj->addComponent(new FontRendererComponenet());
-  this->addGameObject(this->testObj);
+  this->camera->init(glm::vec2(-250, 0));
 
-  unsigned int vao, vbo, ebo;
-  glGenVertexArrays(1, &vao);
-  glGenBuffers(1, &vbo);
-  glGenBuffers(1, &ebo);
+  int xOffset = 10;
+  int yOffset = 10;
 
-  glBindVertexArray(vao);
+  float totalWidth = (float)(600 - xOffset * 2);
+  float totalHeight = (float)(300 - yOffset * 2);
+  float sizeX = totalWidth / 100.0f;
+  float sizeY = totalHeight / 100.0f;
+  float padding = 3;
 
-  glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
-               GL_STATIC_DRAW);
-
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
-  glEnableVertexAttribArray(0);
-
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-                        (void *)(3 * sizeof(float)));
-  glEnableVertexAttribArray(1);
-
-  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-                        (void *)(6 * sizeof(float)));
-  glEnableVertexAttribArray(2);
-
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
-  glBindVertexArray(0);
-  this->vao = vao;
-  this->vbo = vbo;
-  this->ebo = ebo;
+  for (int x = 0; x < 100; x++) {
+    for (int y = 0; y < 100; y++) {
+      float xPos = xOffset + (x * sizeX) + (padding * x);
+      float yPos = yOffset + (y * sizeY) + (padding * y);
+      std::string name = "Obj" + std::to_string(x) + " " + std::to_string(y);
+      GameObject *go = new GameObject(name,
+          new Transform(glm::vec2(xPos, yPos), glm::vec2(sizeX, sizeY)));
+      go->addComponent(new SpriteRenderComponent(
+          glm::vec4(xPos / totalWidth, yPos / totalHeight, 1, 1)));
+      this->addGameObject(go);
+    }
+  }
 }
 
 void LevelEditorScene::loadResources() {
@@ -90,33 +66,13 @@ void LevelEditorScene::loadResources() {
 void LevelEditorScene::update(float deltaTime) { (void)deltaTime; }
 
 void LevelEditorScene::render(float dt) {
-  this->shader->attach();
-  glBindVertexArray(this->vao);
-  //  glBindTexture(GL_TEXTURE_2D, this->sprite->getTexId());
-
-  this->shader->setMat4("uProjectionMatrix",
-                        this->camera.getProjectionMatrix());
-  this->shader->setMat4("uViewMatrix", this->camera.getViewMatrix());
-
-  glm::mat4 model = glm::mat4(1.0f);
-  model = glm::rotate(model, glm::radians((float)glfwGetTime()),
-                      glm::vec3(0, 0, 1));
-  this->shader->setMat4("uModelMatrix", model);
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-  this->shader->detach();
-
-  if (!first) {
-    LOG_TRACE("Creating game object in loop");
-    GameObject *go = new GameObject("loopObject");
-    go->addComponent(new SpriteRenderComponent());
-    this->addGameObject(go);
-    first = true;
-  }
+  std::cout << "Fps" << (1.0f / dt) << std::endl;
 
   for (GameObject *go : this->gameObjects) {
     go->update(dt);
   }
+
+  this->renderer->render();
 }
 
 LevelEditorScene::~LevelEditorScene() {

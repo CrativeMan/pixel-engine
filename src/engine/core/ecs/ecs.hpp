@@ -20,7 +20,8 @@ public:
 class GameObject {
 public:
   GameObject(std::string name);
-  Transform transform;
+  GameObject(std::string name, Transform *transform);
+  Transform *transform;
 
   void start();
   void update(float dt);

@@ -10,9 +10,11 @@
 
 class SpriteRenderComponent : public Component {
 public:
+  SpriteRenderComponent(glm::vec4 color);
   void start() override;
   void update(float dt) override;
   void imgui() override {}
+  glm::vec4 getColor() { return this->color; }
 
 private:
   bool first = false;

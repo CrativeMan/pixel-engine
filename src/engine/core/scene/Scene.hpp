@@ -3,6 +3,7 @@
 
 #include "../../assets/Shader.hpp"
 #include "../../rendering/Camera.hpp"
+#include "../../rendering/Renderer.hpp"
 #include "../ecs/ecs.hpp"
 
 #include <memory>
@@ -10,7 +11,8 @@
 
 class Scene {
 protected:
-  Camera camera;
+  Camera *camera;
+  Renderer *renderer;
   std::vector<GameObject *> gameObjects;
 
 public:
@@ -18,6 +20,7 @@ public:
   virtual ~Scene() = default;
   virtual void init() = 0;
   void start();
+  Camera *getCamera() {return this->camera;}
 
   virtual void addGameObject(GameObject *go);
   virtual void update(float deltaTime) = 0;

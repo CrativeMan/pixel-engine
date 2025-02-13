@@ -7,11 +7,11 @@
 
 class Window {
 public:
-  GLFWwindow *id;
-  SceneManager scenemanager;
+GLFWwindow *id;
+  static Window *window;
+  static SceneManager *scenemanager;
 
-  Window() {};
-  Window(int width, int height, std::string title);
+  static Window *get();
   void init(int width, int height, std::string title);
   void loop();
   void shutdown();
@@ -22,6 +22,7 @@ private:
   const char *title;
   UserInterface ui;
 
+  Window(){this->window = nullptr; this->scenemanager = new SceneManager();};
   void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     (void)window;
     glViewport(0, 0, width, height);
