@@ -1,8 +1,8 @@
 #include <GL/glew.h>
 
+#include "../../system/logger.hpp"
 #include "../header/typedefs.h"
 #include "../input/Input.hpp"
-#include "../../system/logger.hpp"
 #include "Window.hpp"
 #include <GLFW/glfw3.h>
 
@@ -12,7 +12,7 @@ Window *Window::window = nullptr;
 SceneManager *Window::scenemanager = nullptr;
 
 Window *Window::get() {
-  if (Window::window != nullptr) {
+  if (Window::window == nullptr) {
     Window::window = new Window();
   }
   return Window::window;
@@ -25,6 +25,7 @@ void Window::init(int width, int heigh, std::string title) {
     LOG_ERROR("Failed to initialize glfw. Aborting");
     assert(false);
   }
+  LOG_TRACE("Initialized glfw");
 
   // init window
   glfwDefaultWindowHints();
@@ -34,6 +35,7 @@ void Window::init(int width, int heigh, std::string title) {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  LOG_TRACE("Set window hints");
 
   // create window
   this->id = glfwCreateWindow(width, heigh, title.c_str(), NULL, NULL);
@@ -48,21 +50,25 @@ void Window::init(int width, int heigh, std::string title) {
   glfwSetMouseButtonCallback(this->id, MouseListener::mouseButtonCallback);
   glfwSetScrollCallback(this->id, MouseListener::mouseScrollCallback);
   glfwSetKeyCallback(this->id, KeyListener::keyCallback);
+  LOG_TRACE("Set callbacks");
 
   glfwMakeContextCurrent(this->id);
 
   // init glew
   ASSERT(glewInit() == GLEW_OK, "Failed to initialize glew. Aborting");
+  LOG_TRACE("Initialized glew");
 
   // depth and blending for transparency
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_ALWAYS);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  LOG_TRACE("Enabled depth test and blending");
 
   glfwSwapInterval(1);
   glfwShowWindow(this->id);
   glViewport(0, 0, width, heigh);
+  LOG_TRACE("Set viewport");
 
   // init ui and scenes
   this->ui.init(this->id);

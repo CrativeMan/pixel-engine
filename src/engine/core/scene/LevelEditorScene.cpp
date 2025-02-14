@@ -20,7 +20,9 @@ LevelEditorScene::LevelEditorScene() {}
 
 void LevelEditorScene::init() {
   this->loadResources();
+  this->camera = new Camera();
   this->camera->init(glm::vec2(-250, 0));
+  this->renderer = new Renderer();
 
   int xOffset = 10;
   int yOffset = 10;
@@ -36,13 +38,16 @@ void LevelEditorScene::init() {
       float xPos = xOffset + (x * sizeX) + (padding * x);
       float yPos = yOffset + (y * sizeY) + (padding * y);
       std::string name = "Obj" + std::to_string(x) + " " + std::to_string(y);
-      GameObject *go = new GameObject(name,
-          new Transform(glm::vec2(xPos, yPos), glm::vec2(sizeX, sizeY)));
+      GameObject *go = new GameObject(
+          name, new Transform(glm::vec2(xPos, yPos), glm::vec2(sizeX, sizeY)));
       go->addComponent(new SpriteRenderComponent(
           glm::vec4(xPos / totalWidth, yPos / totalHeight, 1, 1)));
       this->addGameObject(go);
+      LOG_TRACE("Added game object %s", name.c_str());
     }
   }
+
+  LOG_TRACE("Gameobject count %d", this->gameObjects.size());
 }
 
 void LevelEditorScene::loadResources() {

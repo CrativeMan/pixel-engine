@@ -17,6 +17,10 @@ int main() {
 
   LOG_INFO("Starting engine");
   Window *window = Window::get();
+  if (window == nullptr) {
+    LOG_ERROR("Failed to get window instance. Aborting");
+    assert(false);
+  }
   window->init(1920, 1080, "engine");
   window->loop();
   window->shutdown();

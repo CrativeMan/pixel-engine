@@ -1,4 +1,5 @@
 #include "Scene.hpp"
+#include "../../../system/logger.hpp"
 #include "../ecs/ecs.hpp"
 
 void Scene::init() {}
@@ -9,6 +10,7 @@ void Scene::start() {
     this->renderer->add(go);
   }
   this->isRunning = true;
+  LOG_TRACE("Started scene");
 }
 
 void Scene::addGameObject(GameObject *go) {
