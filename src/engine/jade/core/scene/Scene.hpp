@@ -30,23 +30,6 @@ private:
   bool isRunning = false;
 };
 
-class LevelEditorScene : public Scene {
-public:
-  LevelEditorScene();
-  ~LevelEditorScene();
-  void init() override;
-  void update(float deltaTime) override;
-  void render(float dt) override;
-
-private:
-  bool first = false;
-  unsigned int vao, vbo, ebo;
-  Shader *shader;
-  GameObject *testObj;
-
-  void loadResources();
-};
-
 class SceneManager {
 private:
   std::unique_ptr<Scene> currentScene;

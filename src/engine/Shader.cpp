@@ -6,8 +6,6 @@
 #include <system/System.hpp>
 #include <system/fileHandler.h>
 
-#define ID "shader"
-
 Shader::Shader() {}
 
 Shader::Shader(const char *vertexPath, const char *fragmentPath) {

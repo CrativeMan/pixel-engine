@@ -6,8 +6,6 @@
 #include <jade/windowing/Input.hpp>
 #include <jade/windowing/Window.hpp>
 
-#define ID "window"
-
 Window *Window::window = nullptr;
 SceneManager *Window::scenemanager = nullptr;
 
@@ -72,7 +70,6 @@ void Window::init(int width, int heigh, std::string title) {
 
   // init ui and scenes
   this->ui.init(this->id);
-  this->scenemanager->changeScene(std::make_unique<LevelEditorScene>());
 }
 
 void Window::shutdown() {

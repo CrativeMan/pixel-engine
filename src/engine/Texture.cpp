@@ -6,8 +6,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#define ID "texture"
-
 Texture::Texture(std::string path) { this->init(path); }
 
 void Texture::init(std::string path) {

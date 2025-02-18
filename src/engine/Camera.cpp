@@ -3,8 +3,6 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 
-#define ID "camera"
-
 Camera::Camera() {}
 
 Camera::Camera(glm::vec2 position) { init(position); }
