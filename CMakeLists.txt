@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(main)
+project(sandbox)
 
 set (OSBitness 32)
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -17,5 +17,5 @@ include_directories(external/.)
 
 add_executable(${PROJECT_NAME} src/game/main.cpp)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Engine GL glfw GLEW imgui)
+target_link_libraries(${PROJECT_NAME} PRIVATE jade GL glfw GLEW imgui)
 target_include_directories(${PROJECT_NAME} PRIVATE src/engine)

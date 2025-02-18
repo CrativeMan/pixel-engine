@@ -9,6 +9,7 @@
 
 #include <clue.hpp>
 #include <jade/core/scene/Scene.hpp>
+#include <memory>
 
 class LevelEditorScene : public Scene {
 public:
@@ -53,10 +54,10 @@ private:
 };
 
 int main() {
+  std::unique_ptr<Scene> les(new LevelEditorScene);
   Window *window = Window::get();
   window->init(1920, 1080, "test");
-  window->scenemanager->changeScene(
-      std::unique_ptr<LevelEditorScene>(new LevelEditorScene()));
+  window->scenemanager->changeScene(std::move(les));
   window->loop();
   window->shutdown();
   delete window;
