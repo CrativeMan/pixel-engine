@@ -1,2 +1,4 @@
-src/engine/assets/stb_image.h
+external/clue.hpp
+external/stb_image.h
 build/
+bin/

@@ -1,4 +1,4 @@
-.PHONY: build run gc clean
+.PHONY: build run gc clean count
 
 build:
 	mkdir -p build
@@ -14,3 +14,6 @@ clean:
 gc:
 	rm -rf bin
 	rm -rf build
+
+count:
+	cloc --exclude-list-file=.clocignore .
