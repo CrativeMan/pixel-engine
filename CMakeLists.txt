@@ -15,7 +15,8 @@ add_subdirectory(src/engine)
 include_directories(src/.)
 include_directories(external/.)
 
-add_executable(${PROJECT_NAME} src/game/main.cpp)
+file (GLOB GAME_SOURCES "src/game/*.cpp")
+add_executable(${PROJECT_NAME} ${GAME_SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE jade GL glfw GLEW imgui)
 target_include_directories(${PROJECT_NAME} PRIVATE src/engine)
