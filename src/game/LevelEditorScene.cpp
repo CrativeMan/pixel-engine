@@ -1,4 +1,5 @@
 #include "LevelEditorScene.h"
+#include <jade/assets/AssetPool.hpp>
 
 LevelEditorScene::LevelEditorScene() {}
 
@@ -13,17 +14,6 @@ void LevelEditorScene::init() {
   this->loadResources();
   this->camera = new Camera();
   this->camera->init(glm::vec2(-250, 0));
-  this->renderer = new Renderer();
-
-  LOG_DEBUG("Gameobject count " << this->gameObjects.size());
-}
-
-void LevelEditorScene::render(float dt) {
-  for (GameObject *go : this->gameObjects) {
-    go->update(dt);
-  }
-
-  this->renderer->render();
 }
 
 void LevelEditorScene::loadResources() {
@@ -31,3 +21,7 @@ void LevelEditorScene::loadResources() {
       AssetPool::getShader("shader/vertex.glsl", "shader/fragment.glsl");
   LOG_INFO("Loaded resources for LevelEditorScene");
 }
+
+void LevelEditorScene::update(float dt) {}
+
+void LevelEditorScene::render(float dt) {}

@@ -17,14 +17,13 @@ public:
 
   void init() override;
 
-  void update(float deltaTime) override { (void)deltaTime; }
+  void update(float deltaTime) override;
 
   void render(float dt) override;
 
 private:
   unsigned int vao, vbo, ebo;
   Shader *shader;
-  GameObject *testObj;
 
   void loadResources();
 };
